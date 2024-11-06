@@ -1,0 +1,15 @@
+{
+  "name": "groupproject",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gurveer Singh, Theodore Nguyen",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1",
+    "forever": "^4.0.3"
+  }
+}
