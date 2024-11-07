@@ -23,6 +23,36 @@ app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/customers', function(req, res)
+{
+    // Declare Query 1
+    let query1 = "SELECT * FROM Customers;"
+    // let query2 = "SELECT * FROM Players;";
+    // let query3 = "SELECT * FROM Teams;";
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields){
+        
+        // Save the people
+        let customers = rows;
+        
+        // db.pool.query(query2, function(error, rows, fields){
+
+        //     let players = rows;
+
+        //     db.pool.query(query3, function(error, rows, fields) {
+
+        //         let teams = rows;
+
+        //         return res.render('jerseys', {data: jerseys, players: players, teams: teams});
+        //     });
+        // });        
+        return res.render('customers', {data: customers});
+
+    });
+});
+
+
 app.get('/jerseys', function(req, res)
 {
     // Declare Query 1

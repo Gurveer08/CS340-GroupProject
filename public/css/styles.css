@@ -122,3 +122,14 @@ button:hover {
         width: 100%;
     }
 }
+
+/* List styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+li {
+    margin: 10px 0;
+}
