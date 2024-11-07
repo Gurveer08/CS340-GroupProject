@@ -1,8 +1,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/styles.css">
 
-<!-- index.hbs -->
-<h1>The server is running!</h1>
-<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+<!-- jerseys.hbs -->
+<h1>Jerseys</h1>
 
 {{!-- Create a table --}}
 <table id="jersey-table">
@@ -111,28 +111,44 @@
     <button type="submit">Add Jersey</button>
 </form>  
 
-<script src="./js/add_person.js"></script>
+<script src="./js/add_jersey.js"></script>
 
 
 <h2>Updating Jersey Form</h2>
 <p>To update a specific players jersey select their name from the drop-down menu on the left and their desired team from the drop down menu on the right</p>
-<form id="update-person-form-ajax">
+<form id="update-jersey-form-ajax">
+    <label for="input-jerseyID">Jersey ID:</label>
+    <input type="number" name="input-jerseyID" id="input-jerseyID">
 
-    <label for="input-fullname">Full name: </label>
-    <select name="input-fullname" id="mySelect">
-        <option value="test">Select a Person</option>
-        {{#each data}}
-        <option value="{{this.id}}">{{this.fname}} {{this.lname}}</option>
+    <label for="input-teamID">Team:</label>
+    <select name="input-teamID" id="input-teamID-ajax">
+        <option value="">Select a Team</option>
+        {{#each teams}}
+        <option value="{{this.teamID}}">{{this.teamName}}</option>
         {{/each}}
     </select>
+    {{!-- <input type="number" name="teamID" id="teamID"> --}}
 
-    <label for="input-homeworld">Homeworld: </label>
-    <select name="input-homeworld" id="input-homeworld-update">
-        <option>Select a Planet</option>
-        {{#each planets}}
-        <option value="{{this.id}}">{{this.name}}</option>
+    
+    <label for="input-playerID">Player:</label>
+    <select name="input-playerID" id="input-playerID-ajax">
+        <option value="">Select a Player</option>
+        {{#each players}}
+        <option value="{{this.playerID}}">{{this.playerName}}</option>
         {{/each}}
     </select>
+    {{!-- <input type="number" name="playerID" id="playerID"> --}}
+
+
+    <label for="input-size">Size:</label>
+    <input type="text" name="input-size" id="input-size" placeholder="Enter size (e.g., S, M, L)">
+
+    <label for="input-inventoryCount">Inventory Count:</label>
+    <input type="number" name="input-inventoryCount" id="input-inventoryCount" placeholder="Enter inventory count" min="0">
+
+    <label for="input-price">Price:</label>
+    <input type="number" name="input-price" id="input-price" placeholder="Enter price" min="0" step="0.01">
+
     <input type="submit">
 
 </form>

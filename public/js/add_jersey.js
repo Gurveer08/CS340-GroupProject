@@ -8,8 +8,8 @@ addJerseyForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputTeam = document.getElementById("input-teamID");
-    let inputPlayer = document.getElementById("input-playerID");
+    let inputTeam = document.getElementById("input-teamID-ajax");
+    let inputPlayer = document.getElementById("input-playerID-ajax");
     let inputSize = document.getElementById("input-size");
     let inputInventoryCount = document.getElementById("input-inventoryCount");
     let inputPrice = document.getElementById("input-price");
@@ -74,6 +74,8 @@ addRowToTable = (data) => {
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
     let newRow = parsedData[parsedData.length - 1]
+
+    console.log(newRow);
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
