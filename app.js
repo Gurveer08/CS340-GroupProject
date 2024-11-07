@@ -17,62 +17,66 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 /*
     ROUTES
 */
-app.get('/', function(req, res)
+app.get('/jerseys', function(req, res)
 {
     // Declare Query 1
-    let query1;
-
-    // If there is no query string, we just perform a basic SELECT
-    if (req.query.lname === undefined)
-    {
-        query1 = "SELECT * FROM bsg_people;";
-    }
-
-    // If there is a query string, we assume this is a search, and return desired results
-    else
-    {
-        query1 = `SELECT * FROM bsg_people WHERE lname LIKE "${req.query.lname}%"`
-    }
-
-    // Query 2 is the same in both cases
-    let query2 = "SELECT * FROM bsg_planets;";
+    let query1 = "SELECT  Jerseys.jerseyID, Teams.teamName, Players.playerName, Jerseys.size, Jerseys.price, Jerseys.inventoryCount FROM Jerseys INNER JOIN Teams ON Jerseys.teamID = Teams.teamID INNER JOIN Players ON Jerseys.playerID = Players.playerID;";
+    let query2 = "SELECT * FROM Players;";
+    let query3 = "SELECT * FROM Teams;";
 
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
         
         // Save the people
-        let people = rows;
+        let jerseys = rows;
         
-        // Run the second query
-        db.pool.query(query2, (error, rows, fields) => {
-            
-            // Save the planets
-            let planets = rows;
+        db.pool.query(query2, function(error, rows, fields){
 
-            return res.render('index', {data: people, planets: planets});
-        })
-    })
+            let players = rows;
+
+            db.pool.query(query3, function(error, rows, fields) {
+
+                let teams = rows;
+
+                return res.render('jerseys', {data: jerseys, players: players, teams: teams});
+            });
+        });        
+    });
 });
 
-    app.post('/add-person-form', function(req, res){
+    app.post('/add-jersey-ajax', function(req, res){
         // Capture the incoming data and parse it back to a JS object
         let data = req.body;
     
         // Capture NULL values
-        let homeworld = parseInt(data['input-homeworld']);
-        if (isNaN(homeworld))
+        let team = parseInt(data['input-teamID']);
+        if (isNaN(team))
         {
-            homeworld = 'NULL'
+            team = 'NULL'
         }
-    
-        let age = parseInt(data['input-age']);
-        if (isNaN(age))
+
+        let player = parseInt(data['input-playerID']);
+        if (isNaN(player))
         {
-            age = 'NULL'
+            player = 'NULL'
         }
+
+        let price = parseFloat(data['input-price']);
+        if (isNaN(price))
+        {
+            price = 'NULL'
+        }
+
+        let inventoryCount = parseInt(data['input-inventoryCount']);
+        if (isNaN(inventoryCount))
+        {
+            inventoryCount = 'NULL'
+        }
+
+        let size = data['input-size'];
     
         // Create the query and run it on the database
-        query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
+        query1 = `INSERT INTO Jerseys (teamID, playerID, size, price, inventoryCount) VALUES (${team}, ${player}, '${size}', ${price}, ${inventoryCount});`;
         db.pool.query(query1, function(error, rows, fields){
     
             // Check to see if there was an error
@@ -87,10 +91,10 @@ app.get('/', function(req, res)
             // presents it on the screen
             else
             {
-                res.redirect('/');
+                res.redirect('/jerseys');
             }
-        })
-    })
+        });
+    });
 /*
     LISTENER
 */
@@ -101,6 +105,42 @@ app.listen(PORT, function(){            // This is the basic syntax for what is 
 // app.js
 
 // Database
-var db = require('./database/db-connector') 
+var db = require('./database/db-connector')  
+
+
+app.delete('/delete-jersey-ajax/', function(req,res,next){
+    let data = req.body;
+    let jerseyID = parseInt(data.id);
+    // let deleteBsg_Cert_People = `DELETE FROM bsg_cert_people WHERE pid = ?`;
+    // let deleteBsg_People= `DELETE FROM bsg_people WHERE id = ?`;
+    let deleteJerseys = `DELETE FROM Jerseys WHERE jerseyID = ?`;
+    let deleteOrderItems = `DELETE FROM OrderItems WHERE jerseyID = ?`
+  
+        // Run the 1st query
+        db.pool.query(deleteOrderItems, [jerseyID], function(error, rows, fields){
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+
+          else
+          {
+              // Run the second query
+              db.pool.query(deleteJerseys, [jerseyID], function(error, rows, fields) {
+
+                  if (error) {
+                      console.log(error);
+                      res.sendStatus(400);
+                  } else {
+                      res.sendStatus(204);
+                    //   res.redirect('/jerseys');
+                  }
+              })
+          }
+    })
+});
+  
 
 
