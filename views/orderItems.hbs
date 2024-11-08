@@ -1,0 +1,99 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+<ul>
+    <li><a href="/jerseys">Jerseys</a></li>
+    <li><a href="/customers">Customers</a></li>
+    <li><a href="/orders">Orders</a></li>
+    <li><a href="/orderItems">Order Items</a></li>
+    <li><a href="/teams">Teams</a></li>
+    <li><a href="/players">Players</a></li>
+</ul>
+
+<h1>Order Items</h1>
+
+{{!-- Create table --}}
+<table id="order-item-table">
+    <thead>
+        <tr>
+            <th>Order Item ID</th>
+            <th>Order ID</th>
+            <th>Jersey ID</th>
+            <th>Quantity</th>
+            <th>Price Each</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>60.00</td>
+            <td><button onclick="deleteOrderItem">Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>1</td>
+            <td>70.00</td>
+            <td><button onclick="deleteOrderItem">Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+            <td>2</td>
+            <td>80.00</td>
+            <td><button onclick="deleteOrderItem">Delete</button></td>
+        </tr>
+    </tbody>
+</table> 
+
+<!-- form to add order items -->
+<form id="add-order-item-form-ajax">
+    <label for="input-orderItemID">Order Item ID:</label>
+    <input type="number" name="input-orderItemID" id="input-orderItemID" placeholder="Enter order item ID">
+
+    <label for="input-orderID">Order ID:</label>
+    <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID">
+
+    <label for="input-jerseyID">Jersey ID:</label>
+    <input type="number" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
+
+    <label for="input-quantity">Quantity:</label>
+    <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
+
+    <label for="input-priceEach">Price Each:</label>
+    <input type="number" step="0.01" name="input-priceEach" id="input-priceEach" placeholder="Enter price each">
+
+    <button type="submit">Add Order Item</button>
+</form>
+
+<script src="./js/add_order_item.js"></script>
+
+<h2>Updating Order Item Form</h2>
+<p>To update an order item's details, select its ID from the drop-down menu on the left and edit the information below.</p>
+
+<form id="update-order-item-form-ajax">
+    <label for="input-orderItemID">Order Item ID:</label>
+    <input type="number" name="input-orderItemID" id="input-orderItemID" placeholder="Enter order item ID">
+
+    <label for="input-orderID">Order ID:</label>
+    <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID">
+
+    <label for="input-jerseyID">Jersey ID:</label>
+    <input type="number" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
+
+    <label for="input-quantity">Quantity:</label>
+    <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
+
+    <label for="input-priceEach">Price Each:</label>
+    <input type="number" step="0.01" name="input-priceEach" id="input-priceEach" placeholder="Enter price each">
+
+    <button type="submit">Update Order Item</button>
+</form>
+
+<script src="./js/update_order_item.js"></script>
