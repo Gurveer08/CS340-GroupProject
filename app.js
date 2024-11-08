@@ -119,7 +119,7 @@ app.get('/orderItems', function(req, res)
   
         let customers = rows;
        
-        return res.render('customers', {data: customers});
+        return res.render('orderItems', {data: customers});
 
     });
 });
@@ -134,7 +134,7 @@ app.get('/teams', function(req, res)
   
         let customers = rows;
        
-        return res.render('customers', {data: customers});
+        return res.render('teams', {data: customers});
 
     });
 });
@@ -149,7 +149,7 @@ app.get('/players', function(req, res)
   
         let customers = rows;
        
-        return res.render('customers', {data: customers});
+        return res.render('players', {data: customers});
 
     });
 });
