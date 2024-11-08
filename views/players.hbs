@@ -1,0 +1,69 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+<ul>
+    <li><a href="/jerseys">Jerseys</a></li>
+    <li><a href="/customers">Customers</a></li>
+    <li><a href="/orders">Orders</a></li>
+    <li><a href="/orderItems">Orders</a></li>
+    <li><a href="/teams">Orders</a></li>
+    <li><a href="/players">Orders</a></li>
+</ul>
+
+<h1>Players</h1>
+
+{{!-- Create table --}}
+<table id="player-table">
+    <thead>
+        <tr>
+            <th>Player ID</th>
+            <th>Player Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Aaron Judge</td>
+            <td><button onclick="deleteOrder({{this.playerID}})">Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Shohei Ohtani</td>
+            <td><button onclick="deleteOrder({{this.playerID}})">Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Mike Trout</td>
+            <td><button onclick="deleteOrder({{this.playerID}})">Delete</button></td>
+        </tr>
+    </tbody>
+</table> 
+
+<!-- form to add new players -->
+<form id="add-player-form-ajax">
+    <label for="input-playerID">Player ID:</label>
+    <input type="number" name="input-playerID" id="input-playerID" placeholder="Enter player ID">
+
+    <label for="input-playerName">Player Name:</label>
+    <input type="text" name="input-playerName" id="input-playerName" placeholder="Enter player name">
+
+    <button type="submit">Add Player</button>
+</form>
+
+<script src="./js/add_player.js"></script>
+
+<h2>Updating Player Form</h2>
+<p>To update a player's details, select their name from the drop-down menu on the left and edit their information below.</p>
+
+<form id="update-player-form-ajax">
+    <label for="input-playerID">Player ID:</label>
+    <input type="number" name="input-playerID" id="input-playerID" placeholder="Enter player ID">
+
+    <label for="input-playerName">Player Name:</label>
+    <input type="text" name="input-playerName" id="input-playerName" placeholder="Enter player name">
+
+    <button type="submit">Update Player</button>
+</form>
+
+<script src="./js/update_player.js"></script>

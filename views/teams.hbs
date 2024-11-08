@@ -1,0 +1,80 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+<ul>
+    <li><a href="/jerseys">Jerseys</a></li>
+    <li><a href="/customers">Customers</a></li>
+    <li><a href="/orders">Orders</a></li>
+    <li><a href="/orderItems">Orders</a></li>
+    <li><a href="/teams">Orders</a></li>
+    <li><a href="/players">Orders</a></li>
+</ul>
+
+<h1>Teams</h1>
+
+<!-- Create table for teams -->
+<table id="team-table">
+    <thead>
+        <tr>
+            <th>Team ID</th>
+            <th>Team Name</th>
+            <th>City</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Dodgers</td>
+            <td>Los Angeles</td>
+            <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Yankees</td>
+            <td>New York</td>
+            <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            
+            <td>Angels</td>
+            <td>Los Angeles</td>
+            <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
+        </tr>
+    </tbody>
+</table> 
+
+<!-- form to add new teams -->
+<form id="add-team-form-ajax">
+    <label for="input-teamID">Team ID:</label>
+    <input type="number" name="input-teamID" id="input-teamID" placeholder="Enter team ID">
+
+    <label for="input-teamName">Team Name:</label>
+    <input type="text" name="input-teamName" id="input-teamName" placeholder="Enter team name">
+
+    <label for="input-city">City:</label>
+    <input type="text" name="input-city" id="input-city" placeholder="Enter city">
+
+    <button type="submit">Add Team</button>
+</form>
+
+<script src="./js/add_team.js"></script>
+
+<h2>Updating Team Form</h2>
+<p>To update a team's details, select their name from the drop-down menu on the left and edit their information below.</p>
+
+<form id="update-team-form-ajax">
+    <label for="input-teamID">Team ID:</label>
+    <input type="number" name="input-teamID" id="input-teamID" placeholder="Enter team ID">
+
+    <label for="input-teamName">Team Name:</label>
+    <input type="text" name="input-teamName" id="input-teamName" placeholder="Enter team name">
+
+    <label for="input-city">City:</label>
+    <input type="text" name="input-city" id="input-city" placeholder="Enter city">
+
+    <button type="submit">Update Team</button>
+</form>
+
+<script src="./js/update_team.js"></script>
