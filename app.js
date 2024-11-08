@@ -108,6 +108,51 @@ app.get('/jerseys', function(req, res)
         });        
     });
 });
+app.get('/orderItems', function(req, res)
+{
+    // Declare Query 1
+    let query1 = "SELECT * FROM orderItems;"
+
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields){
+  
+        let customers = rows;
+       
+        return res.render('customers', {data: customers});
+
+    });
+});
+app.get('/teams', function(req, res)
+{
+    // Declare Query 1
+    let query1 = "SELECT * FROM teams;"
+
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields){
+  
+        let customers = rows;
+       
+        return res.render('customers', {data: customers});
+
+    });
+});
+app.get('/players', function(req, res)
+{
+    // Declare Query 1
+    let query1 = "SELECT * FROM players;"
+
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields){
+  
+        let customers = rows;
+       
+        return res.render('customers', {data: customers});
+
+    });
+});
 
     app.post('/add-jersey-ajax', function(req, res){
         // Capture the incoming data and parse it back to a JS object
