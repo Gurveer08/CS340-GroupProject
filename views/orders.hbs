@@ -11,10 +11,10 @@
     </ul>
 
 <!-- jerseys.hbs -->
-<h1>Customers</h1>
+<h1>Orders</h1>
 
 {{!-- Create a table --}}
-<table id="customer-table">
+<table id="orders-table">
 
     {{!-- Header section --}}
     <thead>
@@ -39,13 +39,11 @@
             {{!-- <td>{{this.jerseyID}}</td>
             <td>{{this.teamID}}</td>
             <td>{{this.playerID}}</td> --}}
+            <td>{{this.orderID}}</td>
+            <td>{{this.orderDate}}</td>
             <td>{{this.customerID}}</td>
-            <td>{{this.firstName}}</td>
-            <td>{{this.lastName}}</td>
-            <td>{{this.email}}</td>
-            <td>{{this.address}}</td>
-            <td>{{this.phone}}</td>
-            <td><button onclick="deleteOrder({{this.customerID}})">Delete</button></td>
+            <td>{{this.totalAmount}}</td>
+            <td><button onclick="deleteOrder({{this.orderID}})">Delete</button></td>
 
         </tr>
         {{/each}}
@@ -87,7 +85,7 @@
     <a href='/'><button>Reset</button></a>
 </form> --}}
 
-<form id="add-customer-form-ajax">
+<form id="add-order-form-ajax">
     {{!-- <label for="input-cID">Team:</label>
     <select name="input-teamID" id="input-teamID-ajax">
         <option value="">Select a Team</option>
@@ -108,20 +106,18 @@
     {{!-- <input type="number" name="playerID" id="playerID"> --}}
 
 
-    <label for="input-fName">First Name:</label>
-    <input type="text" name="input-fName" id="input-fName" placeholder="Enter first name">
+    {{!-- <label for="input-orderID">Order ID</label>
+    <input type="text" name="input-orderID" id="input-orderID" placeholder="Enter Order ID"> --}}
 
-    <label for="input-lName">Last Name</label>
-    <input type="text" name="input-lName" id="input-lName" placeholder="Enter last name">
+    <label for="input-orderDate">Order Date</label>
+    <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
-    <label for="input-email">Email:</label>
-    <input type="text" name="input-email" id="input-email" placeholder="Enter email address">
+    <label for="input-customerID">customerID:</label>
+    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID">
 
-    <label for="input-address">Address:</label>
-    <input type="text" name="input-address" id="input-address" placeholder="Enter your address">
+    <label for="input-totalAmount">Total Amount</label>
+    <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">
 
-    <label for="input-phone">Phone:</label>
-    <input type="text" name="input-phone" id="input-phone" placeholder="Enter phone number">
 
 
     {{!-- <label for="input-inventoryCount">Inventory Count:</label>
@@ -130,32 +126,26 @@
     <label for="input-price">Price:</label>
     <input type="number" name="input-price" id="input-price" placeholder="Enter price" min="0" step="0.01"> --}}
 
-    <button type="submit">Add Customer</button>
+    <button type="submit">Add Order</button>
 </form>  
 
 <script src="./js/add_jersey.js"></script>
 
 
-<h2>Updating Customer Form</h2>
-<form id="update-customer-form-ajax">
-    <label for="input-customerID">Customer ID:</label>
-    <input type="number" name="input-customerID" id="input-customerID">
+<h2>Updating Order Form</h2>
+<form id="update-order-form-ajax">
+    
+    <label for="input-orderID">Order ID</label>
+    <input type="text" name="input-orderID" id="input-orderID" placeholder="Enter Order ID">
 
-   <label for="input-fName">First Name:</label>
-    <input type="text" name="input-fName" id="input-fName" placeholder="Enter first name">
+    <label for="input-orderDate">Order Date</label>
+    <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
-    <label for="input-lName">Last Name</label>
-    <input type="text" name="input-lName" id="input-lName" placeholder="Enter last name">
+    <label for="input-customerID">customerID:</label>
+    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID">
 
-    <label for="input-email">Email:</label>
-    <input type="text" name="input-email" id="input-email" placeholder="Enter email address">
-
-    <label for="input-address">Address:</label>
-    <input type="text" name="input-address" id="input-address" placeholder="Enter your address">
-
-    <label for="input-phone">Phone:</label>
-    <input type="text" name="input-phone" id="input-phone" placeholder="Enter phone number">
-
+    <label for="input-totalAmount">Total Amount</label>
+    <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">
 
     <input type="submit">
 
