@@ -154,6 +154,25 @@ app.get('/players', function(req, res)
     });
 });
 
+
+app.get('/teamplayers', function(req, res)
+{
+    // Declare Query 1
+    let query1 = "SELECT * FROM teamplayers;"
+
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields){
+  
+        let customers = rows;
+       
+        return res.render('teamplayers', {data: customers});
+
+    });
+});
+
+
+
     app.post('/add-jersey-ajax', function(req, res){
         // Capture the incoming data and parse it back to a JS object
         let data = req.body;
