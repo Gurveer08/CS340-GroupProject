@@ -101,7 +101,12 @@
     <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID">
 
     <label for="input-jerseyID">Jersey ID:</label>
-    <input type="number" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
+    <input list="jerseyIDOptions" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
+    <datalist id="jerseyIDOptions">
+    <option value="1">1: Yankees/Aaron Judge</option>
+    <option value="2">2: Dodgers/Shohei Ohtani</option>
+    <option value="3">3: Angels/Mike Trout</option>
+    </datalist>
 
     <label for="input-quantity">Quantity:</label>
     <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
