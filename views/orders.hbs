@@ -115,8 +115,12 @@
     <label for="input-orderDate">Order Date</label>
     <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
-    <label for="input-customerID">customerID:</label>
-    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID">
+    <label for="input-customerID">Customer ID (optional):</label>
+    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID" list ="customerID_list">
+    
+    <datalist id="customerID_list">
+    <option value="NULL">
+    </datalist>
 
     <label for="input-totalAmount">Total Amount</label>
     <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">
@@ -145,7 +149,7 @@
     <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
     <label for="input-customerID">customerID:</label>
-    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID">
+    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID" list = customerID_list
 
     <label for="input-totalAmount">Total Amount</label>
     <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">
