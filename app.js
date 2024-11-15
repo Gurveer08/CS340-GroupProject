@@ -158,16 +158,27 @@ app.get('/players', function(req, res)
 app.get('/teamplayers', function(req, res)
 {
     // Declare Query 1
-    let query1 = "SELECT * FROM teamplayers;"
-
+    let query1 = "SELECT TeamPlayers.teamPlayerID, Teams.teamName, Players.playerName, TeamPlayers.startDate, TeamPlayers.endDate FROM TeamPlayers INNER JOIN Teams ON TeamPlayers.teamID = Teams.teamID INNER JOIN Players ON TeamPlayers.playerID = Players.playerID;"
+    let query2 = "SELECT * FROM Players;";
+    let query3 = "SELECT * FROM Teams;";
 
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
-  
-        let customers = rows;
-       
-        return res.render('teamplayers', {data: customers});
+        
+        // Save the people
+        let teamplayers = rows;
+        
+        db.pool.query(query2, function(error, rows, fields){
 
+            let players = rows;
+
+            db.pool.query(query3, function(error, rows, fields) {
+
+                let teams = rows;
+
+                return res.render('teamplayers', {data: teamplayers, players: players, teams: teams});
+            });
+        });        
     });
 });
 
