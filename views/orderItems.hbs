@@ -22,6 +22,8 @@
             <th>Order Item ID</th>
             <th>Order ID</th>
             <th>Jersey ID</th>
+            <th>Team Name</th>
+            <th>Player</th>
             <th>Quantity</th>
             <th>Price Each</th>
             <th>Action</th>
@@ -32,6 +34,8 @@
             <td>1</td>
             <td>1</td>
             <td>1</td>
+            <th>Yankees</th>
+            <th>Aaron Judge</th>
             <td>1</td>
             <td>60.00</td>
             <td><button onclick="deleteOrderItem">Delete</button></td>
@@ -40,6 +44,8 @@
             <td>2</td>
             <td>2</td>
             <td>2</td>
+            <th>Dodgers</th>
+            <th>Shohei Ohtani</th>
             <td>1</td>
             <td>70.00</td>
             <td><button onclick="deleteOrderItem">Delete</button></td>
@@ -48,6 +54,8 @@
             <td>3</td>
             <td>3</td>
             <td>3</td>
+            <th>Angels</th>
+            <th>Mike Trout</th>
             <td>2</td>
             <td>80.00</td>
             <td><button onclick="deleteOrderItem">Delete</button></td>
@@ -64,7 +72,12 @@
     <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID">
 
     <label for="input-jerseyID">Jersey ID:</label>
-    <input type="number" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
+    <input list="jerseyIDOptions" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
+    <datalist id="jerseyIDOptions">
+    <option value="1">1: Yankees/Aaron Judge</option>
+    <option value="2">2: Dodgers/Shohei Ohtani</option>
+    <option value="3">3: Angels/Mike Trout</option>
+    </datalist>
 
     <label for="input-quantity">Quantity:</label>
     <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
