@@ -16,7 +16,7 @@
 <h1>Team Players </h1>  
 
 {{!-- Create a table --}}
-<table id="team-players-table">
+<table id="team-player-table">
 
     {{!-- Header section --}}
     <thead>
@@ -24,11 +24,24 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
             <th>
-                {{@key}}
+                Team Player ID
             </th>
-            {{/each}}
+            <th>
+                Team Name
+            </th>
+            <th>
+                Player Name
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
     </thead>
 
@@ -37,7 +50,7 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.teamPlayerID}}">
             <td>{{this.teamPlayerID}}</td>
             <td>{{this.teamName}}</td>
             <td>{{this.playerName}}</td>
@@ -49,10 +62,10 @@
         {{/each}}
     </tbody>
 </table> 
-<script src="./js/delete_customers.js"></script>
+<script src="./js/delete_team_player.js"></script>
 
 
-<form id="add-team-players-form-ajax">
+<form id="add-team-player-form-ajax">
 
     <label for="input-teamID">Team:</label>
     <select name="input-teamID" id="input-teamID-ajax">
@@ -79,17 +92,17 @@
     <button type="submit">Add Team Player</button>
 </form>  
 
-<script src="./js/add_jerseys.js"></script>
+<script src="./js/add_team_player.js"></script>
 
 
 <h2>Updating Team Player Form</h2>
-<form id="update-team-players-form-ajax">
+<form id="update-team-player-form-ajax">
     
     <label for="input-team-player-ID">Team Player ID</label>
-    <input type="text" name="input-team-player-ID" id="input-team-player-ID" placeholder="Enter Team Player ID">
+    <input type="text" name="input-team-player-ID" id="input-update-team-player-ID" placeholder="Enter Team Player ID">
 
     <label for="input-teamID">Team:</label>
-    <select name="input-teamID" id="input-teamID-ajax">
+    <select name="input-teamID" id="input-update-teamID-ajax">
         <option value="">Select a Team</option>
         {{#each teams}}
         <option value="{{this.teamID}}">{{this.teamName}}</option>
@@ -97,7 +110,7 @@
     </select>
     
     <label for="input-playerID">Player:</label>
-    <select name="input-playerID" id="input-playerID-ajax">
+    <select name="input-playerID" id="input-update-playerID-ajax">
         <option value="">Select a Player</option>
         {{#each players}}
         <option value="{{this.playerID}}">{{this.playerName}}</option>
@@ -105,13 +118,13 @@
     </select>
 
     <label for="input-startDate">Start Date</label>
-    <input type="date" name="input-startDate" id="input-startDate" placeholder="Enter Start Date"> 
+    <input type="date" name="input-startDate" id="input-update-startDate" placeholder="Enter Start Date"> 
 
     <label for="input-endDate">End Date</label>
-    <input type="date" name="input-endDate" id="input-endDate" placeholder="Enter End Date">
+    <input type="date" name="input-endDate" id="input-update-endDate" placeholder="Enter End Date">
 
     <input type="submit">
 
 </form>
 `
-<script src="./js/update_jerseys.js"></script>
+<script src="./js/update_team_player.js"></script>

@@ -199,7 +199,100 @@ app.get('/teamplayers', function(req, res)
     });
 });
 
+// POST route for adding a new TeamPlayer
+app.post('/add-team-player-ajax', function (req, res) {
+    // Capture the incoming data
+    let data = req.body;
 
+    // Define the query to insert a new record
+    let query = `INSERT INTO TeamPlayers (teamID, playerID, startDate, endDate) VALUES (?, ?, ?, ?)`;
+
+    // Insert the new data
+    db.pool.query(query, [data.teamID, data.playerID, data.startDate, data.endDate], function (error, results, fields) {
+
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        // Query to retrieve the new row for AJAX response
+        let query2 = `SELECT TeamPlayers.teamPlayerID, Teams.teamName, Players.playerName, TeamPlayers.startDate, TeamPlayers.endDate 
+                      FROM TeamPlayers 
+                      INNER JOIN Teams ON TeamPlayers.teamID = Teams.teamID 
+                      INNER JOIN Players ON TeamPlayers.playerID = Players.playerID 
+                      WHERE TeamPlayers.teamPlayerID = ?`;
+
+        db.pool.query(query2, [results.insertId], function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            // Send the new row data as the response
+            res.send(rows);
+        });
+    });
+});
+
+// Delete Route for Team Player
+app.delete('/delete-team-player-ajax/', function(req,res,next){
+    let data = req.body;
+    let teamPlayerID = parseInt(data.id);
+
+    let deleteTeamPlayers = `DELETE FROM TeamPlayers WHERE teamPlayerID = ?`;
+  
+        // Run query
+        db.pool.query(deleteTeamPlayers, [teamPlayerID], function(error, rows, fields) {
+            if (error) {
+                // If error occurs send Error 400 response
+                console.log(error);
+                res.status(400).send({ message: "Error deleting team player." });
+            } else {
+                // Send a 204 response if delete successful
+                res.sendStatus(204);
+            }
+        });
+    });
+
+// PUT Route for updating an existing TeamPlayer
+app.put('/put-team-player-ajax', function (req, res) {
+    // Capture the incoming data
+    let data = req.body;
+
+    // Define the query to update the record
+    let query = `UPDATE TeamPlayers 
+                 SET teamID = ?, playerID = ?, startDate = ?, endDate = ? 
+                 WHERE teamPlayerID = ?`;
+
+    // Execute the query to update the data
+    db.pool.query(query, [data.teamID, data.playerID, data.startDate, data.endDate, data.teamPlayerID], function (error, results, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        // Query to retrieve the updated row for AJAX response
+        let query2 = `SELECT TeamPlayers.teamPlayerID, Teams.teamName, Players.playerName, TeamPlayers.startDate, TeamPlayers.endDate 
+                      FROM TeamPlayers 
+                      INNER JOIN Teams ON TeamPlayers.teamID = Teams.teamID 
+                      INNER JOIN Players ON TeamPlayers.playerID = Players.playerID 
+                      WHERE TeamPlayers.teamPlayerID = ?`;
+
+        db.pool.query(query2, [data.teamPlayerID], function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            // Send the updated row data as the response
+            res.send(rows);
+        });
+    });
+});
 
     app.post('/add-jersey-ajax', function(req, res){
         // Capture the incoming data and parse it back to a JS object
