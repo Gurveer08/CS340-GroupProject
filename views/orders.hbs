@@ -116,8 +116,13 @@
     <label for="input-orderDate">Order Date</label>
     <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
-    <label for="input-customerID">Customer ID (optional):</label>
-    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID" list ="customerID_list">
+    <label for="input-customerID">Customer (Optional):</label>
+    <select name="input-customerID" id="customer-playerID-ajax">
+        <option value="">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        {{/each}}
+    </select>
     
     <datalist id="customerID_list">
     <option value="NULL">
@@ -140,7 +145,7 @@
 <script src="./js/add_jersey.js"></script>
 
 
-<h2>Updating Order Form</h2>
+<h2>Updating Order Form </h2>
 <form id="update-order-form-ajax">
     
     <label for="input-orderID">Order ID</label>
@@ -149,8 +154,15 @@
     <label for="input-orderDate">Order Date</label>
     <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
-    <label for="input-customerID">customerID:</label>
-    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID" list = customerID_list
+    {{!-- <label for="input-customerID">customerID:</label>
+    <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID" list = customerID_list --}}
+    <label for="input-customerID">Customer:</label>
+    <select name="input-customerID" id="customer-playerID-ajax">
+        <option value="">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        {{/each}}
+    </select>
 
     <label for="input-totalAmount">Total Amount</label>
     <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">

@@ -27,6 +27,7 @@ app.get('/orders', function(req, res)
 {
     // Declare Query 1
     let query1 = "SELECT * FROM Orders;"
+    let query2 = "SELECT customerID FROM Customers;"
     // let query2 = "SELECT * FROM Players;";
     // let query3 = "SELECT * FROM Teams;";
 
@@ -35,6 +36,13 @@ app.get('/orders', function(req, res)
         
         // Save the people
         let orders = rows;
+
+        db.pool.query(query2, function(error, rows, fields){
+
+            let customers = rows;
+            return res.render('orders', {data: orders, customers: customers});
+
+        })
         
         // db.pool.query(query2, function(error, rows, fields){
 
@@ -47,7 +55,7 @@ app.get('/orders', function(req, res)
         //         return res.render('jerseys', {data: jerseys, players: players, teams: teams});
         //     });
         // });        
-        return res.render('orders', {data: orders});
+        // return res.render('orders', {data: orders});
 
     });
 });
@@ -112,15 +120,24 @@ app.get('/orderItems', function(req, res)
 {
     // Declare Query 1
     let query1 = "SELECT * FROM orderItems;"
+    let query2 = "SELECT orderID FROM Orders;"
+    let query3 = "SELECT jerseyID FROM Jerseys;"
 
 
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
   
         let customers = rows;
-       
-        return res.render('orderItems', {data: customers});
 
+        db.pool.query(query2, function(error, rows, fields){
+            let orders = rows;
+
+            db.pool.query(query3, function(error, rows, fields){
+                let jerseys = rows;
+
+                return res.render('orderItems', {data: customers, orders:orders, jerseys:jerseys});
+            })
+        })
     });
 });
 app.get('/teams', function(req, res)

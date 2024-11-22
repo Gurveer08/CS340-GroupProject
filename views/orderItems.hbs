@@ -65,19 +65,34 @@
 
 <!-- form to add order items -->
 <form id="add-order-item-form-ajax">
-    <label for="input-orderItemID">Order Item ID:</label>
-    <input type="number" name="input-orderItemID" id="input-orderItemID" placeholder="Enter order item ID">
+    {{!-- <label for="input-orderItemID">Order Item ID:</label>
+    <input type="number" name="input-orderItemID" id="input-orderItemID" placeholder="Enter order item ID"> --}}
 
-    <label for="input-orderID">Order ID:</label>
-    <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID">
+    {{!-- <label for="input-orderID">Order ID:</label>
+    <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID"> --}}
+    <label for="input-orderID">Order:</label>
+    <select name="input-orderID" id="input-orderID-ajax">
+        <option value="">Select an Order</option>
+        {{#each orders}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
 
-    <label for="input-jerseyID">Jersey ID:</label>
+    {{!-- <label for="input-jerseyID">Jersey ID:</label>
     <input list="jerseyIDOptions" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
     <datalist id="jerseyIDOptions">
     <option value="1">1: Yankees/Aaron Judge</option>
     <option value="2">2: Dodgers/Shohei Ohtani</option>
     <option value="3">3: Angels/Mike Trout</option>
-    </datalist>
+    </datalist> --}}
+
+    <label for="input-jerseyID">Jersey:</label>
+    <select name="input-jerseyID" id="input-jerseyID-ajax">
+        <option value="">Select a Jersey</option>
+        {{#each jerseys}}
+        <option value="{{this.jerseyID}}">{{this.jerseyID}}</option>
+        {{/each}}
+    </select>
 
     <label for="input-quantity">Quantity:</label>
     <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
@@ -97,16 +112,30 @@
     <label for="input-orderItemID">Order Item ID:</label>
     <input type="number" name="input-orderItemID" id="input-orderItemID" placeholder="Enter order item ID">
 
-    <label for="input-orderID">Order ID:</label>
-    <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID">
+    {{!-- <label for="input-orderID">Order ID:</label>
+    <input type="number" name="input-orderID" id="input-orderID" placeholder="Enter order ID"> --}}
+    <label for="input-orderID">Order:</label>
+    <select name="input-orderID" id="input-orderID-ajax">
+        <option value="">Select an Order</option>
+        {{#each orders}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
 
-    <label for="input-jerseyID">Jersey ID:</label>
+    {{!-- <label for="input-jerseyID">Jersey ID:</label>
     <input list="jerseyIDOptions" name="input-jerseyID" id="input-jerseyID" placeholder="Enter jersey ID">
     <datalist id="jerseyIDOptions">
     <option value="1">1: Yankees/Aaron Judge</option>
     <option value="2">2: Dodgers/Shohei Ohtani</option>
     <option value="3">3: Angels/Mike Trout</option>
-    </datalist>
+    </datalist> --}}
+    <label for="input-jerseyID">Jersey:</label>
+    <select name="input-jerseyID" id="input-jerseyID-ajax">
+        <option value="">Select a Jersey</option>
+        {{#each jerseys}}
+        <option value="{{this.jerseyID}}">{{this.jerseyID}}</option>
+        {{/each}}
+    </select>
 
     <label for="input-quantity">Quantity:</label>
     <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
