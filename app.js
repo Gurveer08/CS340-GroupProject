@@ -182,7 +182,7 @@ app.get('/teamplayers', function(req, res)
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
         
-        // Save the people
+        // Save the data
         let teamplayers = rows;
         
         db.pool.query(query2, function(error, rows, fields){
@@ -199,15 +199,15 @@ app.get('/teamplayers', function(req, res)
     });
 });
 
-// POST route for adding a new TeamPlayer
+// POST route for adding new TeamPlayer
 app.post('/add-team-player-ajax', function (req, res) {
-    // Capture the incoming data
+    // Save incoming data
     let data = req.body;
 
-    // Define the query to insert a new record
+    // Define query to insert new data
     let query = `INSERT INTO TeamPlayers (teamID, playerID, startDate, endDate) VALUES (?, ?, ?, ?)`;
 
-    // Insert the new data
+    // Insert new data
     db.pool.query(query, [data.teamID, data.playerID, data.startDate, data.endDate], function (error, results, fields) {
 
         if (error) {
@@ -216,7 +216,7 @@ app.post('/add-team-player-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve the new row for AJAX response
+        // Query to retrieve new row for AJAX response
         let query2 = `SELECT TeamPlayers.teamPlayerID, Teams.teamName, Players.playerName, TeamPlayers.startDate, TeamPlayers.endDate 
                       FROM TeamPlayers 
                       INNER JOIN Teams ON TeamPlayers.teamID = Teams.teamID 
@@ -230,7 +230,7 @@ app.post('/add-team-player-ajax', function (req, res) {
                 return;
             }
 
-            // Send the new row data as the response
+            // Send new row data as response
             res.send(rows);
         });
     });
@@ -256,17 +256,17 @@ app.delete('/delete-team-player-ajax/', function(req,res,next){
         });
     });
 
-// PUT Route for updating an existing TeamPlayer
+// PUT Route for updating TeamPlayer
 app.put('/put-team-player-ajax', function (req, res) {
     // Capture the incoming data
     let data = req.body;
 
-    // Define the query to update the record
+    // Define query to update data
     let query = `UPDATE TeamPlayers 
                  SET teamID = ?, playerID = ?, startDate = ?, endDate = ? 
                  WHERE teamPlayerID = ?`;
 
-    // Execute the query to update the data
+    // Execute query to update data
     db.pool.query(query, [data.teamID, data.playerID, data.startDate, data.endDate, data.teamPlayerID], function (error, results, fields) {
         if (error) {
             console.log(error);
@@ -274,7 +274,7 @@ app.put('/put-team-player-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve the updated row for AJAX response
+        // Query to retrieve updated row for AJAX response
         let query2 = `SELECT TeamPlayers.teamPlayerID, Teams.teamName, Players.playerName, TeamPlayers.startDate, TeamPlayers.endDate 
                       FROM TeamPlayers 
                       INNER JOIN Teams ON TeamPlayers.teamID = Teams.teamID 
@@ -288,7 +288,7 @@ app.put('/put-team-player-ajax', function (req, res) {
                 return;
             }
 
-            // Send the updated row data as the response
+            // Send updated row data as response
             res.send(rows);
         });
     });
