@@ -25,7 +25,7 @@ function deleteTeamPlayer(teamPlayerID) {
         // Check if the row's data-value attribute matches the target value
         if (row.dataset.value === teamPlayerID.toString()) {
             // Delete the matching row
-            table.deleteRow(i);
+            table.deleteRow(i+1);
             rowFound = true;
             break; // Exit loop once row is deleted
         }
