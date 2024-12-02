@@ -17,10 +17,17 @@ function deleteTeamPlayer(teamPlayerID) {
   
   function deleteRow(teamPlayerID){
       let table = document.getElementById("team-player-table");
-      for (let i = 0, row; row = table.rows[i]; i++) {
-         if (table.rows[i].getAttribute("data-value") == teamPlayerID) {
-              table.deleteRow(i);
-              break;
-         }
-      }
+
+      const rows = table.tBodies[0].rows;
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        // Check if the row's data-value attribute matches the target value
+        if (row.dataset.value === teamPlayerID.toString()) {
+            // Delete the matching row
+            table.deleteRow(i);
+            rowFound = true;
+            break; // Exit loop once row is deleted
+        }
+    }
   }

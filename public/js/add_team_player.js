@@ -69,11 +69,13 @@ addRowToTable = (data) => {
 
     // Create a row and 5 cells
     let row = document.createElement("TR");
+    row.setAttribute('data-value', newRow.teamPlayerID);
     let idCell = document.createElement("TD");
     let teamCell = document.createElement("TD");
     let playerCell = document.createElement("TD");
     let startDateCell = document.createElement("TD");
     let endDateCell = document.createElement("TD");
+    let deleteButton = document.createElement("TD");
 
     // Fill the cells with correct data
     idCell.innerText = newRow.teamPlayerID;   
@@ -81,6 +83,7 @@ addRowToTable = (data) => {
     playerCell.innerText = newRow.playerName;
     startDateCell.innerText = newRow.startDate;
     endDateCell.innerText = newRow.endDate;
+    deleteButton.innerHTML = `<button onclick="deleteTeamPlayer(` + newRow.teamPlayerID + `)">Delete</button>`;
 
     // Add the cells to the row
     row.appendChild(idCell);
@@ -88,7 +91,8 @@ addRowToTable = (data) => {
     row.appendChild(playerCell);
     row.appendChild(startDateCell);
     row.appendChild(endDateCell);
+    row.appendChild(deleteButton);
 
     // Add the row to the table
-    currentTable.appendChild(row);
+    currentTable.tBodies[0].appendChild(row);
 }
