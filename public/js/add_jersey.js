@@ -79,29 +79,35 @@ addRowToTable = (data) => {
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
+    row.setAttribute('data-value', newRow.jerseyID);
     let idCell = document.createElement("TD");
     let playerCell = document.createElement("TD");
     let teamCell = document.createElement("TD");
     let sizeCell = document.createElement("TD");
     let priceCell = document.createElement("TD");
     let inventoryCountCell = document.createElement("TD");
+    let deleteButton = document.createElement("TD");
+
 
     // Fill the cells with correct data
     idCell.innerText = newRow.jerseyID;
-    playerCell.innerText = newRow.player;
-    teamCell.innerText = newRow.team;
+    playerCell.innerText = newRow.playerName;
+    teamCell.innerText = newRow.teamName;
     sizeCell.innerText = newRow.size;
     priceCell.innerText = newRow.price;
     inventoryCountCell.innerText = newRow.inventoryCount;
+    deleteButton.innerHTML = `<button onclick="deleteJersey(` + newRow.jerseyID + `)">Delete</button>`;
+
 
     // Add the cells to the row 
     row.appendChild(idCell);
-    row.appendChild(playerCell);
     row.appendChild(teamCell);
+    row.appendChild(playerCell);
     row.appendChild(sizeCell);
     row.appendChild(priceCell);
     row.appendChild(inventoryCountCell);
-    
+    row.appendChild(deleteButton);
+
     // Add the row to the table
     currentTable.appendChild(row);
 }
