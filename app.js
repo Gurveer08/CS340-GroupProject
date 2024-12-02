@@ -256,6 +256,38 @@ app.delete('/delete-team-player-ajax/', function(req,res,next){
         });
     });
 
+    app.delete('/delete-customer-ajax/', function(req,res,next){
+        let data = req.body;
+        let customerID = parseInt(data.id);
+    
+        let deleteCustomer1 = `DELETE FROM Orders WHERE customerID = ?`;
+        let deleteCustomer2 = `DELETE FROM Customers WHERE customerID = ?`;
+      
+        // Run query
+        db.pool.query(deleteCustomer1, [customerID], function(error, rows, fields) {
+            if (error) {
+                // If error occurs send Error 400 response
+                console.log(error);
+                res.status(400).send({ message: "Error deleting order." });
+                return;
+            }
+            
+            db.pool.query(deleteCustomer2, [customerID], function(error, rows, fields) {
+
+                if (error) {
+                    // If error occurs send Error 400 response
+                    console.log(error);
+                    res.status(400).send({ message: "Error deleting order." });
+                }
+                else{
+                    // Send a 204 response if delete successful
+                    res.sendStatus(204);
+                }
+            });
+        });
+    });
+    
+
 // PUT Route for updating TeamPlayer
 app.put('/put-team-player-ajax', function (req, res) {
     // Capture the incoming data
@@ -289,6 +321,71 @@ app.put('/put-team-player-ajax', function (req, res) {
             }
 
             // Send updated row data as response
+            res.send(rows);
+        });
+    });
+});
+// POST route for adding new Customer
+app.post('/add-customer-ajax', function (req, res) {
+    // Save incoming data
+    let data = req.body;
+
+    // Define query to insert new data
+    let query = `INSERT INTO Customers (firstName, lastName, email, address, phone) VALUES (?, ?, ?, ?, ?)`;
+
+    // Insert new data
+    db.pool.query(query, [data.firstName, data.lastName, data.email, data.address, data.phone], function (error, results, fields) {
+
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+        
+        // Query to retrieve new row for AJAX response
+        let query2 = `SELECT * FROM Customers WHERE customerID = ?`;
+
+        db.pool.query(query2, [results.insertId], function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            // Send new row data as response
+            res.send(rows);
+        });
+    });
+});
+// PUT Route for updating customer
+app.put('/put-customer-ajax', function (req, res) {
+    // Capture the incoming data
+    let data = req.body;
+
+    // Define query to update data
+    let query = `UPDATE Customers 
+                 SET firstName = ?, lastName = ?, email = ?, address = ?, phone = ?
+                 WHERE customerID = ?`;
+
+    // Execute query to update data
+    db.pool.query(query, [data.firstName, data.lastName, data.email, data.address, data.phone, data.customerID], function (error, results, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        // Query to retrieve new row for AJAX response
+        let query2 = `SELECT * FROM Customers WHERE customerID = ?`;
+
+        db.pool.query(query2, [data.customerID], function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            // Send new row data as response
             res.send(rows);
         });
     });

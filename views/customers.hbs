@@ -13,7 +13,7 @@
 
 </ul>
 
-<!-- jerseys.hbs -->
+<!-- customers.hbs -->
 <h1>Customers</h1>
 
 {{!-- Create a table --}}
@@ -38,7 +38,7 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.customerID}}">
             {{!-- <td>{{this.jerseyID}}</td>
             <td>{{this.teamID}}</td>
             <td>{{this.playerID}}</td> --}}
@@ -48,13 +48,13 @@
             <td>{{this.email}}</td>
             <td>{{this.address}}</td>
             <td>{{this.phone}}</td>
-            <td><button onclick="deleteOrder({{this.customerID}})">Delete</button></td>
+            <td><button onclick="deleteCustomer({{this.customerID}})">Delete</button></td>
 
         </tr>
         {{/each}}
     </tbody>
 </table> 
-<script src="./js/delete_customers.js"></script>
+<script src="./js/delete_customer.js"></script>
 
 {{!-- <!-- /views/index.hbs -->
 <h2>Adding Data using an HTML form</h2>
@@ -91,78 +91,51 @@
 </form> --}}
 
 <form id="add-customer-form-ajax">
-    {{!-- <label for="input-cID">Team:</label>
-    <select name="input-teamID" id="input-teamID-ajax">
-        <option value="">Select a Team</option>
-        {{#each teams}}
-        <option value="{{this.teamID}}">{{this.teamName}}</option>
-        {{/each}}
-    </select>
-    {{!-- <input type="number" name="teamID" id="teamID"> --}}
 
-    
-    <!-- PLAYER INPUT SELECT - DELETE IF UNECCESSARY
-    <label for="input-playerID">Player:</label>
-    <select name="input-playerID" id="input-playerID-ajax">
-        <option value="">Select a Player</option>
-        {{#each players}}
-        <option value="{{this.playerID}}">{{this.playerName}}</option>
-        {{/each}}
-    </select> 
-    {{!-- <input type="number" name="playerID" id="playerID"> --}} -->
+    <label for="input-firstName-ajax">First Name:</label>
+    <input type="text" name="input-firstName-ajax" id="input-firstName-ajax" placeholder="Enter first name">
 
+    <label for="input-lastName-ajax">Last Name</label>
+    <input type="text" name="input-lastName-ajax" id="input-lastName-ajax" placeholder="Enter last name">
 
-    <label for="input-fName">First Name:</label>
-    <input type="text" name="input-fName" id="input-fName" placeholder="Enter first name">
+    <label for="input-email-ajax">Email:</label>
+    <input type="text" name="input-email-ajax" id="input-email-ajax" placeholder="Enter email address">
 
-    <label for="input-lName">Last Name</label>
-    <input type="text" name="input-lName" id="input-lName" placeholder="Enter last name">
+    <label for="input-address-ajax">Address:</label>
+    <input type="text" name="input-address-ajax" id="input-address-ajax" placeholder="Enter your address">
 
-    <label for="input-email">Email:</label>
-    <input type="text" name="input-email" id="input-email" placeholder="Enter email address">
-
-    <label for="input-address">Address:</label>
-    <input type="text" name="input-address" id="input-address" placeholder="Enter your address">
-
-    <label for="input-phone">Phone:</label>
-    <input type="number" name="input-phone" id="input-phone" placeholder="Enter phone number">
-
-
-    {{!-- <label for="input-inventoryCount">Inventory Count:</label>
-    <input type="number" name="input-inventoryCount" id="input-inventoryCount" placeholder="Enter inventory count" min="0">
-
-    <label for="input-price">Price:</label>
-    <input type="number" name="input-price" id="input-price" placeholder="Enter price" min="0" step="0.01"> --}}
+    <label for="input-phone-ajax">Phone:</label>
+    <input type="number" name="input-phone-ajax" id="input-phone-ajax" placeholder="Enter phone number">
 
     <button type="submit">Add Customer</button>
 </form>  
 
-<script src="./js/add_jersey.js"></script>
+<script src="./js/add_customer.js"></script>
 
 
 <h2>Updating Customer Form</h2>
 <form id="update-customer-form-ajax">
-    <label for="input-customerID">Customer ID:</label>
-    <input type="number" name="input-customerID" id="input-customerID">
+    <label for="input-update-customer-ID">Customer ID:</label>
+    <input type="number" name="input-update-customer-ID" id="input-update-customer-ID">
 
-   <label for="input-fName">First Name:</label>
-    <input type="text" name="input-fName" id="input-fName" placeholder="Enter first name">
+   <label for="input-update-firstName-ajax">First Name:</label>
+    <input type="text" name="input-update-firstName-ajax" id="input-update-firstName-ajax" placeholder="Enter first name">
 
-    <label for="input-lName">Last Name</label>
-    <input type="text" name="input-lName" id="input-lName" placeholder="Enter last name">
+    <label for="input-update-lastName-ajax">Last Name</label>
+    <input type="text" name="input-update-lastName-ajax" id="input-update-lastName-ajax" placeholder="Enter last name">
 
-    <label for="input-email">Email:</label>
-    <input type="text" name="input-email" id="input-email" placeholder="Enter email address">
+    <label for="input-update-email">Email:</label>
+    <input type="text" name="input-update-email" id="input-update-email" placeholder="Enter email address">
 
-    <label for="input-address">Address:</label>
-    <input type="text" name="input-address" id="input-address" placeholder="Enter your address">
+    <label for="input-update-address">Address:</label>
+    <input type="text" name="input-update-address" id="input-update-address" placeholder="Enter your address">
 
-    <label for="input-phone">Phone:</label>
-    <input type="text" name="input-phone" id="input-phone" placeholder="Enter phone number">
+    <label for="input-update-phone">Phone:</label>
+    <input type="text" name="input-update-phone" id="input-update-phone" placeholder="Enter phone number">
 
 
     <input type="submit">
 
 </form>
 
-<script src="./js/update_jersey.js"></script>
+<script src="./js/update_customer.js"></script>
