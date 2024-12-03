@@ -25,23 +25,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Aaron Judge</td>
-            <td><button onclick="deleteOrder({{this.playerID}})">Delete</button></td>
+        {{#each data}}
+        <tr data-value="{{this.playerID}}">
+            <td>{{this.playerID}}</td>
+            <td>{{this.playerName}}</td>
+            <td><button onclick="deletePlayer({{this.playerID}})">Delete</button></td>
+
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Shohei Ohtani</td>
-            <td><button onclick="deleteOrder({{this.playerID}})">Delete</button></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Mike Trout</td>
-            <td><button onclick="deleteOrder({{this.playerID}})">Delete</button></td>
-        </tr>
+        {{/each}}
     </tbody>
 </table> 
+<script src="./js/delete_player.js"></script>
 
 <!-- form to add new players -->
 <form id="add-player-form-ajax">
