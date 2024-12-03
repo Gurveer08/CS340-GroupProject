@@ -15,51 +15,43 @@
 
 <h1>Order Items </h1>
 
-{{!-- Create table --}}
+{{!-- Create a table --}}
 <table id="order-item-table">
+
+    {{!-- Header section --}}
     <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
         <tr>
-            <th>Order Item ID</th>
-            <th>Order ID</th>
-            <th>Jersey ID</th>
-            <th>Team Name</th>
-            <th>Player</th>
-            <th>Quantity</th>
-            <th>Price Each</th>
-            <th>Action</th>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
         </tr>
     </thead>
+
+    {{!-- Body section --}}
     <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
         <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <th>Yankees</th>
-            <th>Aaron Judge</th>
-            <td>1</td>
-            <td>60.00</td>
-            <td><button onclick="deleteOrderItem">Delete</button></td>
+            {{!-- <td>{{this.jerseyID}}</td>
+            <td>{{this.teamID}}</td>
+            <td>{{this.playerID}}</td> --}}
+            <td>{{this.orderItemID}}</td>
+            <td>{{this.orderID}}</td>
+            <td>{{this.jerseyID}}</td>
+            <td>{{this.teamName}}</td>
+            <td>{{this.playerName}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.priceEach}}</td>
+            <td><button onclick="deleteOrderItem({{this.orderItemID}})">Delete</button></td>
+
         </tr>
-        <tr>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <th>Dodgers</th>
-            <th>Shohei Ohtani</th>
-            <td>1</td>
-            <td>70.00</td>
-            <td><button onclick="deleteOrderItem">Delete</button></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-            <th>Angels</th>
-            <th>Mike Trout</th>
-            <td>2</td>
-            <td>80.00</td>
-            <td><button onclick="deleteOrderItem">Delete</button></td>
-        </tr>
+        {{/each}}
     </tbody>
 </table> 
 
@@ -95,15 +87,15 @@
     </select>
 
     <label for="input-quantity">Quantity:</label>
-    <input type="number" name="input-quantity" id="input-quantity" placeholder="Enter quantity">
+    <input type="number" name="input-quantity" id="input-quantity-ajax" placeholder="Enter quantity">
 
     <label for="input-priceEach">Price Each:</label>
-    <input type="number" step="0.01" name="input-priceEach" id="input-priceEach" placeholder="Enter price each">
+    <input type="number" step="0.01" name="input-priceEach" id="input-priceEach-ajax" placeholder="Enter price each">
 
     <button type="submit">Add Order Item</button>
 </form>
 
-<script src="./js/add_order_item.js"></script>
+<script src="./js/add_orderitems.js"></script>
 
 <h2>Updating Order Item Form</h2>
 <p>To update an order item's details, select its ID from the drop-down menu on the left and edit the information below.</p>
@@ -146,4 +138,4 @@
     <button type="submit">Update Order Item</button>
 </form>
 
-<script src="./js/update_order_item.js"></script>
+<script src="./js/update_orderitems.js"></script>

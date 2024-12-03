@@ -119,7 +119,7 @@ app.get('/jerseys', function(req, res)
 app.get('/orderItems', function(req, res)
 {
     // Declare Query 1
-    let query1 = "SELECT * FROM orderItems;"
+    let query1 = "SELECT orderItemID, OrderItems.jerseyID, OrderItems.orderID, Teams.teamName, Players.playerName, quantity, priceEach FROM OrderItems INNER JOIN Jerseys ON OrderItems.jerseyID = Jerseys.jerseyID INNER JOIN Teams ON Teams.teamID = Jerseys.teamID INNER JOIN Players ON Players.playerID = Jerseys.playerID;"
     let query2 = "SELECT orderID FROM Orders;"
     let query3 = "SELECT jerseyID FROM Jerseys;"
 
@@ -482,6 +482,70 @@ app.put('/put-customer-ajax', function (req, res) {
             }
         });
     });
+// POST route for adding new Order Item
+app.post('/add-orderItem-ajax', function (req, res) {
+    // Save incoming data
+    let data = req.body;
+
+    // Define query to insert new data
+    let query1 = `INSERT INTO OrderItems (orderID, jerseyID, quantity, priceEach) VALUES (?, ?, ?, ?)`;
+
+    // let quantity = parseInt(data.quantity);
+    // let priceEach = parseFloat(data.priceEach);
+    let jersey = parseInt(data.jersey);
+    let order = parseInt(data.order);
+
+    // Insert new data
+    db.pool.query(query1, [order, jersey, data.quantity, data.priceEach], function (error, results, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+        
+        // Query to retrieve new row for AJAX response
+        let query2 = "SELECT orderItemID, OrderItems.jerseyID, OrderItems.orderID, Teams.teamName, Players.playerName, quantity, priceEach FROM OrderItems INNER JOIN Jerseys ON OrderItems.jerseyID = Jerseys.jerseyID INNER JOIN Teams ON Teams.teamID = Jerseys.teamID INNER JOIN Players ON Players.playerID = Jerseys.playerID WHERE orderItemID = ?;"
+        // let query3 = "SELECT orderID FROM Orders WHERE orderItemsID = ?;"
+        // let query4 = "SELECT jerseyID FROM Jerseys WHERE orderItemsID = ?;"
+
+        db.pool.query(query2, [results.insertId], function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            // db.pool.query(query3, [results.insertId], function(error, rows, fields) {
+            //     console.log("query3");
+            //     if (error) {
+            //         console.log(error);
+            //         res.sendStatus(500);
+            //         return;
+            //     }
+
+            //     let orderID = rows.orderID;
+
+            //     db.pool(query4, [results.insertId], function(error, rows, fields) {
+            //         console.log("query4");
+            //         if (error) {
+            //             console.log(error);
+            //             res.sendStatus(500);
+            //             return;
+            //         }
+                    
+            //         let jerseyID = rows.jerseyID;
+
+            //         let extended = {...rows, ...jerseyID, ...orderID};
+
+            //         // Send new row data as response
+            //         res.send(extended);
+            //     })
+            // })
+
+            res.send(rows);
+        });
+    });
+});
 /*
     LISTENER
 */
