@@ -47,6 +47,7 @@ addJerseyForm.addEventListener("submit", function (e) {
             inputTeam.value = '';
             inputPlayer.value = '';
             inputPrice.value = '';
+            inputSize.value = '';
             inputInventoryCount.value = '';
             inputPrice.value = '';
         }
@@ -109,5 +110,5 @@ addRowToTable = (data) => {
     row.appendChild(deleteButton);
 
     // Add the row to the table
-    currentTable.appendChild(row);
+    currentTable.tBodies[0].appendChild(row);
 }

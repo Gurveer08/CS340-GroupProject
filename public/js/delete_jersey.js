@@ -37,7 +37,6 @@ function deleteJersey(jerseyID) {
       if (row.dataset.value === jerseyID.toString()) {
           // Delete the matching row
           table.deleteRow(i+1);
-          rowFound = true;
           break; // Exit loop once row is deleted
       }
   }

@@ -37,7 +37,7 @@
 
         {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value="{{this.jerseyID}}">
             {{!-- <td>{{this.jerseyID}}</td>
             <td>{{this.teamID}}</td>
             <td>{{this.playerID}}</td> --}}
@@ -48,7 +48,6 @@
             <td>{{this.price}}</td>
             <td>{{this.inventoryCount}}</td>
             <td><button onclick="deleteJersey({{this.jerseyID}})">Delete</button></td>
-
         </tr>
         {{/each}}
     </tbody>
@@ -131,13 +130,13 @@
 
 
 <h2>Updating Jersey Form</h2>
-<p>To update a specific players jersey select their name from the drop-down menu on the left and their desired team from the drop down menu on the right</p>
+<p>To update a specific players jersey enter the jersey ID and the updated information </p>
 <form id="update-jersey-form-ajax">
-    <label for="input-jerseyID">Jersey ID:</label>
-    <input type="number" name="input-jerseyID" id="input-jerseyID">
+    <label for="update-input-jerseyID-ajax">Jersey ID:</label>
+    <input type="number" name="update-input-jerseyID-ajax" id="update-input-jerseyID-ajax">
 
-    <label for="input-teamID">Team:</label>
-    <select name="input-teamID" id="input-teamID-ajax">
+    <label for="update-input-teamID-ajax">Team:</label>
+    <select name="update-input-teamID-ajax" id="update-input-teamID-ajax">
         <option value="">Select a Team</option>
         {{#each teams}}
         <option value="{{this.teamID}}">{{this.teamName}}</option>
@@ -146,8 +145,8 @@
     {{!-- <input type="number" name="teamID" id="teamID"> --}}
 
     
-    <label for="input-playerID">Player:</label>
-    <select name="input-playerID" id="input-playerID-ajax">
+    <label for="update-input-playerID-ajax">Player:</label>
+    <select name="update-input-playerID-ajax" id="update-input-playerID-ajax">
         <option value="">Select a Player</option>
         {{#each players}}
         <option value="{{this.playerID}}">{{this.playerName}}</option>
@@ -156,22 +155,21 @@
     {{!-- <input type="number" name="playerID" id="playerID"> --}}
 
 
-    <label for="input-size">Size:</label>
-    <select name="input-size" id="input-size" placeholder="Enter size (e.g., S, M, L)">
+    <label for="update-input-size-ajax">Size:</label>
+    <select name="update-input-size-ajax" id="update-input-size-ajax" placeholder="Enter size (e.g., S, M, L)">
         <option value="" disabled selected>Select size</option>
         <option>Small</option>
         <option>Medium</option>
         <option>Large</option>
     </select>
 
-    <label for="input-inventoryCount">Inventory Count:</label>
-    <input type="number" name="input-inventoryCount" id="input-inventoryCount" placeholder="Enter inventory count" min="0">
+    <label for="update-input-inventoryCount-ajax">Inventory Count:</label>
+    <input type="number" name="update-input-inventoryCount-ajax" id="update-input-inventoryCount-ajax" placeholder="Enter inventory count" min="0">
 
-    <label for="input-price">Price:</label>
-    <input type="number" name="input-price" id="input-price" placeholder="Enter price" min="0" step="0.01">
+    <label for="update-input-price-ajax">Price:</label>
+    <input type="number" name="update-input-price-ajax" id="update-input-price-ajax" placeholder="Enter price" min="0" step="0.01">
 
     <input type="submit">
-
 </form>
 
-<script src="./js/update_jersey.js"></script>
+<script src="./js/edit_jersey.js"></script>
