@@ -21,32 +21,21 @@
         <tr>
             <th>Team ID</th>
             <th>Team Name</th>
-            <th>City</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Dodgers</td>
-            <td>Los Angeles</td>
+        {{#each data}}
+        <tr data-value="{{this.teamID}}">
+            <td>{{this.teamID}}</td>
+            <td>{{this.teamName}}</td>
             <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
+
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Yankees</td>
-            <td>New York</td>
-            <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            
-            <td>Angels</td>
-            <td>Los Angeles</td>
-            <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
-        </tr>
+        {{/each}}
     </tbody>
 </table> 
+<script src="./js/delete_team.js"></script>
 
 <!-- form to add new teams -->
 <form id="add-team-form-ajax">

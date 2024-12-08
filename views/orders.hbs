@@ -13,105 +13,46 @@
 
 </ul>
 
-<!-- jerseys.hbs -->
+<!-- Orders.hbs -->
 <h1>Orders</h1>
 
 {{!-- Create a table --}}
-<table id="orders-table">
+<table id="order-table">
 
     {{!-- Header section --}}
     <thead>
-
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
         <tr>
             {{#each data.[0]}}
             <th>
                 {{@key}}
             </th>
             {{/each}}
+            <th>Action</th>
         </tr>
     </thead>
 
     {{!-- Body section --}}
     <tbody>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
-        <tr>
-            {{!-- <td>{{this.jerseyID}}</td>
-            <td>{{this.teamID}}</td>
-            <td>{{this.playerID}}</td> --}}
+        <tr data-value="{{this.orderID}}">
             <td>{{this.orderID}}</td>
             <td>{{this.orderDate}}</td>
             <td>{{this.customerID}}</td>
             <td>{{this.totalAmount}}</td>
+            <td>{{this.teamID}}</td>
+            <td>{{this.playerID}}</td> 
             <td><button onclick="deleteOrder({{this.orderID}})">Delete</button></td>
 
         </tr>
         {{/each}}
     </tbody>
 </table> 
-<script src="./js/delete_customers.js"></script>
+<script src="./js/delete_order.js"></script>
 
-{{!-- <!-- /views/index.hbs -->
-<h2>Adding Data using an HTML form</h2>
-<p>To add a new person, please enter their information below nad click `Submit`!</p>
-<form id="add-person-form" method="POST" action="/add-person-form">
-    <label for="input-fname">First Name: </label>
-    <input type="text" name="input-fname" id="input-fname">
-    
-    <label for="input-lname">Last Name: </label>
-    <input type="text" name="input-lname" id="input-lname">
-
-    <label for="input-homeworld">Homeworld: </label>
-     <select name="input-homeworld" id="input-homeworld-ajax">
-        <option value="">Select a Planet</option>
-        {{#each planets}}
-        <option value="{{this.id}}">{{this.name}}</option>
-        {{/each}}
-    </select>
-
-    <label for="input-age">Age: </label>
-    <input type="number" name="input-age" id="input-age">
-
-    <input type="submit">
-</form> 
-
-<h2>Search Using an HTML Form</h2>
-<p>Search by last name using the field below. Partial last names are OK too!</p>
-<form id="search-person-html" method='GET' action='/'>
-    <label for="input-lname">Search by Last Name: </label>
-    <input type="text" name="lname" id="input-lname-html-search">
-    
-    <input type="submit">
-    <a href='/'><button>Reset</button></a>
-</form> --}}
 
 <form id="add-order-form-ajax">
-    {{!-- <label for="input-cID">Team:</label>
-    <select name="input-teamID" id="input-teamID-ajax">
-        <option value="">Select a Team</option>
-        {{#each teams}}
-        <option value="{{this.teamID}}">{{this.teamName}}</option>
-        {{/each}}
-    </select>
-    {{!-- <input type="number" name="teamID" id="teamID"> --}}
 
-    <!--Player input- delete if not needed-->
-     <!--<label for="input-playerID">Player:</label>
-    <select name="input-playerID" id="input-playerID-ajax">
-        <option value="">Select a Player</option>
-        {{#each players}}
-        <option value="{{this.playerID}}">{{this.playerName}}</option>
-        {{/each}}
-    </select>  -->
-
-    {{!-- <input type="number" name="playerID" id="playerID"> --}}
-
-
-    {{!-- <label for="input-orderID">Order ID</label>
-    <input type="text" name="input-orderID" id="input-orderID" placeholder="Enter Order ID"> --}}
 
     <label for="input-orderDate">Order Date</label>
     <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
@@ -131,18 +72,10 @@
     <label for="input-totalAmount">Total Amount</label>
     <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">
 
-
-
-    {{!-- <label for="input-inventoryCount">Inventory Count:</label>
-    <input type="number" name="input-inventoryCount" id="input-inventoryCount" placeholder="Enter inventory count" min="0">
-
-    <label for="input-price">Price:</label>
-    <input type="number" name="input-price" id="input-price" placeholder="Enter price" min="0" step="0.01"> --}}
-
     <button type="submit">Add Order</button>
 </form>  
 
-<script src="./js/add_jersey.js"></script>
+<script src="./js/add_order.js"></script>
 
 
 <h2>Updating Order Form </h2>
@@ -171,4 +104,4 @@
 
 </form>
 
-<script src="./js/update_jersey.js"></script>
+<script src="./js/update_order.js"></script>

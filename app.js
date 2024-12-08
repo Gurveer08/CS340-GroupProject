@@ -60,6 +60,59 @@ app.get('/orders', function(req, res)
     });
 });
 
+// Delete Route for Orders
+app.delete('/delete-order-ajax/', function(req,res,next){
+    let data = req.body;
+    let orderID = parseInt(data.id);
+
+    let deleteOrders = `DELETE FROM Orders WHERE orderID = ?`;
+  
+        // Run query
+        db.pool.query(deleteOrders, [orderID], function(error, rows, fields) {
+            if (error) {
+                // If error occurs send Error 400 response
+                console.log(error);
+                res.status(400).send({ message: "Error deleting order." });
+            } else {
+                // Send a 204 response if delete successful
+                res.sendStatus(204);
+            }
+        });
+    });
+
+
+app.post('/add-order-form-ajax', function (req, res) {
+    // Save incoming data
+    let data = req.body;
+
+    // Define query to insert new data
+    let query = `INSERT INTO Orders (orderID, orderDate, customerID, totalAmount) VALUES (?, ?, ?, ?)`;
+
+    // Insert new data
+    db.pool.query(query, [data.orderID, data.orderDate, data.customerID, data.totalAmount], function (error, results, fields) {
+
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        // Query to retrieve new row for AJAX response
+        let query2 = `SELECT * FROM Orders WHERE orderID = ?`;
+
+        db.pool.query(query2, [results.insertId], function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            // Send new row data as response
+            res.send(rows);
+        });
+    });
+});
+
 app.get('/customers', function(req, res)
 {
     // Declare Query 1
@@ -143,34 +196,74 @@ app.get('/orderItems', function(req, res)
 app.get('/teams', function(req, res)
 {
     // Declare Query 1
-    let query1 = "SELECT * FROM teams;"
+    let query1 = "SELECT * FROM Teams;"
 
 
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
   
-        let customers = rows;
+        let teams = rows;
        
-        return res.render('teams', {data: customers});
+        return res.render('teams', {data: teams});
 
     });
 });
+
+// Delete Route for Teams
+app.delete('/delete-team-ajax/', function(req,res,next){
+    let data = req.body;
+    let teamID = parseInt(data.id);
+
+    let deleteTeams = `DELETE FROM Teams WHERE teamID = ?`;
+  
+        // Run query
+        db.pool.query(deleteTeams, [teamID], function(error, rows, fields) {
+            if (error) {
+                // If error occurs send Error 400 response
+                console.log(error);
+                res.status(400).send({ message: "Error deleting team." });
+            } else {
+                // Send a 204 response if delete successful
+                res.sendStatus(204);
+            }
+        });
+    });
+
 app.get('/players', function(req, res)
 {
     // Declare Query 1
-    let query1 = "SELECT * FROM players;"
+    let query1 = "SELECT * FROM Players;"
 
 
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
   
-        let customers = rows;
+        let players = rows;
        
-        return res.render('players', {data: customers});
+        return res.render('players', {data:  players});
 
     });
 });
 
+// Delete Route for Players
+app.delete('/delete-player-ajax/', function(req,res,next){
+    let data = req.body;
+    let playerID = parseInt(data.id);
+
+    let deletePlayers = `DELETE FROM Players WHERE playerID = ?`;
+  
+        // Run query
+        db.pool.query(deletePlayers, [playerID], function(error, rows, fields) {
+            if (error) {
+                // If error occurs send Error 400 response
+                console.log(error);
+                res.status(400).send({ message: "Error deleting player." });
+            } else {
+                // Send a 204 response if delete successful
+                res.sendStatus(204);
+            }
+        });
+    });
 
 app.get('/teamplayers', function(req, res)
 {
@@ -254,39 +347,7 @@ app.delete('/delete-team-player-ajax/', function(req,res,next){
                 res.sendStatus(204);
             }
         });
-    });
-
-    app.delete('/delete-customer-ajax/', function(req,res,next){
-        let data = req.body;
-        let customerID = parseInt(data.id);
-    
-        let deleteCustomer1 = `DELETE FROM Orders WHERE customerID = ?`;
-        let deleteCustomer2 = `DELETE FROM Customers WHERE customerID = ?`;
-      
-        // Run query
-        db.pool.query(deleteCustomer1, [customerID], function(error, rows, fields) {
-            if (error) {
-                // If error occurs send Error 400 response
-                console.log(error);
-                res.status(400).send({ message: "Error deleting order." });
-                return;
-            }
-            
-            db.pool.query(deleteCustomer2, [customerID], function(error, rows, fields) {
-
-                if (error) {
-                    // If error occurs send Error 400 response
-                    console.log(error);
-                    res.status(400).send({ message: "Error deleting order." });
-                }
-                else{
-                    // Send a 204 response if delete successful
-                    res.sendStatus(204);
-                }
-            });
-        });
-    });
-    
+    }); 
 
 // PUT Route for updating TeamPlayer
 app.put('/put-team-player-ajax', function (req, res) {
@@ -390,17 +451,46 @@ app.put('/put-customer-ajax', function (req, res) {
         });
     });
 });
-
-app.post('/add-jersey-ajax', function(req, res){
-    // Capture the incoming data and parse it back to a JS object
+app.delete('/delete-customer-ajax/', function(req,res,next){
     let data = req.body;
+    let customerID = parseInt(data.id);
 
-    // Capture NULL values
-    // let team = parseInt(data['input-teamID']);
-    // if (isNaN(team))
-    // {
-    //     team = 'NULL'
-    // }
+    let deleteCustomer1 = `DELETE FROM Orders WHERE customerID = ?`;
+    let deleteCustomer2 = `DELETE FROM Customers WHERE customerID = ?`;
+  
+    // Run query
+    db.pool.query(deleteCustomer1, [customerID], function(error, rows, fields) {
+        if (error) {
+            // If error occurs send Error 400 response
+            console.log(error);
+            res.status(400).send({ message: "Error deleting order." });
+            return;
+        }
+        
+        db.pool.query(deleteCustomer2, [customerID], function(error, rows, fields) {
+
+            if (error) {
+                // If error occurs send Error 400 response
+                console.log(error);
+                res.status(400).send({ message: "Error deleting order." });
+            }
+            else{
+                // Send a 204 response if delete successful
+                res.sendStatus(204);
+            }
+        });
+    });
+});
+    app.post('/add-jersey-ajax', function(req, res){
+        // Capture the incoming data and parse it back to a JS object
+        let data = req.body;
+    
+        // Capture NULL values
+        // let team = parseInt(data['input-teamID']);
+        // if (isNaN(team))
+        // {
+        //     team = 'NULL'
+        // }
 
     let team = parseInt(data.teamID);
     if (isNaN(team))
