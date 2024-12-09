@@ -94,8 +94,8 @@ addRowToTable = (data) => {
 
     // Add the cells to the row
     row.appendChild(idCell);
-    row.appendChild(orderCell);
     row.appendChild(jerseyCell);
+    row.appendChild(orderCell);
     row.appendChild(teamCell);
     row.appendChild(playerCell);
     row.appendChild(quantityCell);

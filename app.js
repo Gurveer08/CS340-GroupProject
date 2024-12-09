@@ -610,6 +610,43 @@ app.post('/edit-jersey-ajax', function(req, res) {
     });
 });
 
+app.post('/edit-order-items-ajax', function(req, res) {
+
+    let query1 = `UPDATE OrderItems SET orderID = ?, jerseyID = ?, quantity = ?, priceEach = ?  WHERE orderItemID = ?;`;
+
+    let data = req.body;
+
+    let jerseyID = parseInt(data.jerseyID);
+    let orderID = parseInt(data.orderID);
+    let quantity = parseInt(data.quantity);
+    let priceEach = parseFloat(data.priceEach);
+    let orderItemID = parseInt(data.orderItemID);
+
+
+    db.pool.query(query1, [orderID, jerseyID, quantity, priceEach, orderItemID], function(error, results, fields) {
+
+        if (error) {
+            console.log(error);
+            res.sendStatus(500);
+            return;
+        }
+
+        let query2 = "SELECT orderItemID, OrderItems.jerseyID, OrderItems.orderID, Teams.teamName, Players.playerName, quantity, priceEach FROM OrderItems INNER JOIN Jerseys ON OrderItems.jerseyID = Jerseys.jerseyID INNER JOIN Teams ON Teams.teamID = Jerseys.teamID INNER JOIN Players ON Players.playerID = Jerseys.playerID WHERE orderItemID = ?;"
+
+        // Run the 1st query
+        db.pool.query(query2, [orderItemID], function(error, rows, fields){
+
+            if (error) {
+                console.log(error);
+                res.sendStatus(500);
+                return;
+            }
+
+            res.send(rows);      
+        });
+    });
+});
+
 // POST route for adding new Order Item
 app.post('/add-orderItem-ajax', function (req, res) {
     // Save incoming data
