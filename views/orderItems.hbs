@@ -49,11 +49,11 @@
             <td>{{this.quantity}}</td>
             <td>{{this.priceEach}}</td>
             <td><button onclick="deleteOrderItem({{this.orderItemID}})">Delete</button></td>
-
         </tr>
         {{/each}}
     </tbody>
 </table> 
+<script src="./js/delete_orderitems.js"></script>
 
 <!-- form to add order items -->
 <form id="add-order-item-form-ajax">

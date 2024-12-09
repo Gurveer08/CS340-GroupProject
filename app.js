@@ -481,6 +481,29 @@ app.delete('/delete-customer-ajax/', function(req,res,next){
         });
     });
 });
+
+app.delete('/delete-order-item-ajax/', function(req,res,next){
+    let data = req.body;
+    let orderItemID = parseInt(data.id);
+
+    let deleteOrderItem = `DELETE FROM OrderItems WHERE orderItemID = ?`;
+  
+    // Run query
+    db.pool.query(deleteOrderItem, [orderItemID], function(error, rows, fields) {
+        if (error) {
+            // If error occurs send Error 400 response
+            console.log(error);
+            res.status(400).send({ message: "Error deleting order item." });
+            return;
+        }
+        
+            else{
+                // Send a 204 response if delete successful
+                res.sendStatus(204);
+            }
+        });
+    });
+
     app.post('/add-jersey-ajax', function(req, res){
         // Capture the incoming data and parse it back to a JS object
         let data = req.body;
