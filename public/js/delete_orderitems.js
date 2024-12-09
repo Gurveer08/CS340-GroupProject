@@ -1,3 +1,6 @@
+//Refrencing the CS340 repository https://github.com/osu-cs340-ecampus/nodejs-starter-app.git 
+
+
 function deleteOrderItem(orderItemID) {
     let link = '/delete-order-item-ajax/';
     let data = {

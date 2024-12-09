@@ -1,3 +1,7 @@
+//Refrencing the CS340 repository https://github.com/osu-cs340-ecampus/nodejs-starter-app.git 
+
+
+
 function deleteTeamPlayer(teamPlayerID) {
     let link = '/delete-team-player-ajax/';
     let data = {
