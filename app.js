@@ -126,9 +126,11 @@ app.put('/put-order-ajax', function (req, res) {
         }
 
         // Query to retrieve updated row for AJAX response
-        let query2 = `SELECT Orders.orderID, Orders.orderDate, Orders.customerID, Orders.totalAmount 
-                      FROM Orders 
-                      WHERE Orders.orderID = ?`;
+        let query2 = `
+        SELECT Orders.*, Customers.firstName, Customers.lastName 
+        FROM Orders
+        LEFT JOIN Customers ON Orders.customerID = Customers.customerID;
+        `;
 
         db.pool.query(query2, [data.orderID], function (error, rows, fields) {
             if (error) {
