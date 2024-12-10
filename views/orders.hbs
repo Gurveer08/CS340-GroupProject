@@ -43,8 +43,8 @@
             <td>{{this.orderDate}}</td>
             <td>{{this.customerID}}</td>
             <td>{{this.totalAmount}}</td>
-            <td>{{this.teamID}}</td>
-            <td>{{this.playerID}}</td> 
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
             <td><button onclick="deleteOrder({{this.orderID}})">Delete</button></td>
 
         </tr>
@@ -61,10 +61,10 @@
     <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
 
     <label for="input-customerID">Customer (Optional):</label>
-    <select name="input-customerID" id="customer-playerID-ajax">
+    <select name="input-customerID" id="input-customer">
         <option value="">Select a Customer</option>
         {{#each customers}}
-        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        <option value="{{this.customerID}}">{{this.firstName}} {{this.lastName}}</option>
         {{/each}}
     </select>
     
@@ -85,23 +85,23 @@
 <form id="update-order-form-ajax">
     
     <label for="input-orderID">Order ID</label>
-    <input type="text" name="input-orderID" id="input-orderID" placeholder="Enter Order ID">
+    <input type="text" name="input-orderID" id="input-update-orderID" placeholder="Enter Order ID">
 
     <label for="input-orderDate">Order Date</label>
-    <input type="date" name="input-orderDate" id="input-orderDate" placeholder="Enter Order Date">
+    <input type="date" name="input-orderDate" id="input-update-orderDate" placeholder="Enter Order Date">
 
     {{!-- <label for="input-customerID">customerID:</label>
     <input type="text" name="input-customerID" id="input-customerID" placeholder="Enter Customer ID" list = customerID_list --}}
     <label for="input-customerID">Customer:</label>
-    <select name="input-customerID" id="customer-playerID-ajax">
+    <select name="input-customerID" id="input-update-customerID">
         <option value="">Select a Customer</option>
         {{#each customers}}
-        <option value="{{this.customerID}}">{{this.customerID}}</option>
+        <option value="{{this.customerID}}">{{this.firstName}} {{this.lastName}}</option>
         {{/each}}
     </select>
 
     <label for="input-totalAmount">Total Amount</label>
-    <input type="text" name="input-totalAmount" id="input-totalAmount" placeholder="Enter Total Amount">
+    <input type="text" name="input-totalAmount" id="input-update-totalAmount" placeholder="Enter Total Amount">
 
     <input type="submit">
 

@@ -1,85 +1,83 @@
-//Refrencing the CS340 repository https://github.com/osu-cs340-ecampus/nodejs-starter-app.git 
-
-
 // Get the objects we need to modify
 let updateTeamPlayerForm = document.getElementById('update-team-player-form-ajax');
 
 // Modify the objects we need
 updateTeamPlayerForm.addEventListener("submit", function (e) {
+    
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputTeamPlayerID = document.getElementById("input-update-team-player-ID");
-    let inputTeamID = document.getElementById("input-update-teamID-ajax");
-    let inputPlayerID = document.getElementById("input-update-playerID-ajax");
+    let inputTeamPlayerId = document.getElementById("input-update-team-player-ID");
+    let inputTeam = document.getElementById("input-update-teamID-ajax");
+    let inputPlayer = document.getElementById("input-update-playerID-ajax");
     let inputStartDate = document.getElementById("input-update-startDate");
     let inputEndDate = document.getElementById("input-update-endDate");
 
     // Get the values from the form fields
-    let teamPlayerIDValue = inputTeamPlayerID.value;
-    let teamIDValue = inputTeamID.value;
-    let playerIDValue = inputPlayerID.value;
+    let teamPlayerIdValue = inputTeamPlayerId.value;
+    let teamValue = inputTeam.value;
+    let playerValue = inputPlayer.value;
     let startDateValue = inputStartDate.value;
     let endDateValue = inputEndDate.value;
 
-    console.log(teamPlayerIDValue);
-    console.log(teamIDValue);
-    console.log(inputTeamID)
-    console.log(playerIDValue);
-    console.log(startDateValue);
-    console.log(endDateValue);
-
-    // Abort if required fields are empty
-    if (!teamPlayerIDValue || !teamIDValue || !playerIDValue || !startDateValue) {
-        console.log("Missing required fields.");
-        return;
-    }
-
-    // Put our data we want to send in a JavaScript object
+    // Put our data we want to send in a javascript object
     let data = {
-        teamPlayerID: teamPlayerIDValue,
-        teamID: teamIDValue,
-        playerID: playerIDValue,
+        teamPlayerID: teamPlayerIdValue,
+        teamID: teamValue,
+        playerID: playerValue,
         startDate: startDateValue,
-        endDate: endDateValue,
-    };
-
+        endDate: endDateValue
+    }
+    
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/put-team-player-ajax", true);
+    xhttp.open("PUT", "/put-team-player-ajax");  
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            // Update the row in the table
-            updateRow(xhttp.response, teamPlayerIDValue);
-        } else if (xhttp.readyState == 4 && xhttp.status != 200) {
-            console.log("There was an error with the input.");
+
+            // Add the updated data to the table
+            updateTableRow(xhttp.response, teamPlayerIdValue);
+
+            // Clear the input fields for another transaction
+            inputTeamPlayerId.value = '';
+            inputTeam.value = '';
+            inputPlayer.value = '';
+            inputStartDate.value = '';
+            inputEndDate.value = '';
         }
-    };
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-});
+})
 
-function updateRow(data, teamPlayerID) {
-    let parsedData = JSON.parse(data);
+function updateTableRow(updatedTeamPlayer, teamPlayerID) {
+    let parsedData = JSON.parse(updatedTeamPlayer)[0];
 
     let table = document.getElementById("team-player-table");
 
-    for (let i = 0, row; (row = table.rows[i]); i++) {
-        // Iterate through rows
-        if (table.rows[i].getAttribute("data-value") == teamPlayerID) {
-            // Get the location of the row where we found the matching team player ID
-            let updateRowIndex = table.getElementsByTagName("tr")[i];
+    const rows = table.tBodies[0].rows;
 
-            // Update table cells with the new data
-            updateRowIndex.getElementsByTagName("td")[1].innerHTML = parsedData.teamName;
-            updateRowIndex.getElementsByTagName("td")[2].innerHTML = parsedData.playerName;
-            updateRowIndex.getElementsByTagName("td")[3].innerHTML = parsedData.startDate;
-            updateRowIndex.getElementsByTagName("td")[4].innerHTML = parsedData.endDate;
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        // Check if the row's data-value attribute matches the target value
+        if (row.dataset.value === teamPlayerID.toString()) {
+            // Update the matching row
+            const cells = row.cells;
+
+            cells[1].textContent = parsedData.teamName;
+            cells[2].textContent = parsedData.playerName;
+            cells[3].textContent = parsedData.startDate;
+            cells[4].textContent = parsedData.endDate;
+
+            break; // Exit loop once row is updated
         }
     }
 }

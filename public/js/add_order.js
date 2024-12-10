@@ -1,99 +1,79 @@
-//Refrencing the CS340 repository https://github.com/osu-cs340-ecampus/nodejs-starter-app.git 
-
-
-// Get the objects we need to modify
+// Get the form object
 let addOrderForm = document.getElementById('add-order-form-ajax');
 
-// Modify the objects we need
+// Add an event listener to handle the form submission
 addOrderForm.addEventListener("submit", function (e) {
-    
-    // Prevent the form from submitting
+    // Prevent the form from submitting the usual way
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    //let inputOrderID = document.getElementById("input-orderID-ajax");
-    let inputOrderDate = document.getElementById("input-orderDate-ajax");
-    let inputCustomerID = document.getElementById("input-customerID");
+    // Get the form fields and their values
+    let inputOrderDate = document.getElementById("input-orderDate");
+    let inputCustomerID = document.getElementById("input-customer");
     let inputTotalAmount = document.getElementById("input-totalAmount");
 
-    // Get the values from the form fields
-    // let orderIDValue = inputOrderID.value;
     let orderDateValue = inputOrderDate.value;
-    let customerIDValue = inputCustomerID.value;
+    let customerIDValue = inputCustomerID.value || null;
     let totalAmountValue = inputTotalAmount.value;
 
-    // Put our data we want to send in a javascript object
+    // Create the data object we will send with the request
     let data = {
-        //orderID: orderIDValue,
         orderDate: orderDateValue,
         customerID: customerIDValue,
         totalAmount: totalAmountValue
-    }
-    
-    // Setup our AJAX request
+    };
+
+    // Set up our AJAX request
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/add-order-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
-    // Tell our AJAX request how to resolve
+    // Define the callback function to handle the response
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Parse the response, assuming the server returns the new order
+            let response = JSON.parse(xhttp.responseText);
+            let newOrder = response[0];  // Assuming the response is an array with one object
 
-            // Add the new data to the table
-            addRowToTable(xhttp.response);
+            // Dynamically add the new order to the table
+            addRowToTable(newOrder);
 
-            // Clear the input fields for another transaction
+            // Clear the form fields after submission
             inputOrderDate.value = '';
             inputCustomerID.value = '';
             inputTotalAmount.value = '';
+        } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("Error adding order.");
         }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
-            console.log("There was an error with the input.")
-        }
-    }
+    };
 
-    // Send the request and wait for the response
+    // Send the AJAX request with the data
     xhttp.send(JSON.stringify(data));
+});
 
-})
+// Function to dynamically add the new order to the table
+function addRowToTable(newOrder) {
+    let table = document.getElementById("order-table").getElementsByTagName('tbody')[0];
 
-// Creates a single row from an Object representing a single record from Orders
-addRowToTable = (data) => {
+    // Create a new row
+    let newRow = table.insertRow(table.rows.length);
 
-    // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("order-table");
+    // Insert cells for each order attribute
+    let cell1 = newRow.insertCell(0);
+    let cell2 = newRow.insertCell(1);
+    let cell3 = newRow.insertCell(2);
+    let cell4 = newRow.insertCell(3);
+    let cell5 = newRow.insertCell(4);
+    let cell6 = newRow.insertCell(5);
+    let cell7 = newRow.insertCell(6);
 
-    // Get the location where we should insert the new row (end of table)
-    let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1];
+    // Set the text for each cell
+    cell1.textContent = newOrder.orderID;
+    cell2.textContent = newOrder.orderDate;
+    cell3.textContent = newOrder.customerID;
+    cell4.textContent = newOrder.totalAmount;
+    cell5.textContent = newOrder.teamID;
+    cell6.textContent = newOrder.playerID;
 
-    console.log(newRow);
-
-    // Create a row and 5 cells
-    let row = document.createElement("TR");
-    row.setAttribute('data-value', newRow.orderID);
-    let idCell = document.createElement("TD");
-    let orderDateCell = document.createElement("TD");
-    let customerIDCell = document.createElement("TD");
-    let totalAmountCell = document.createElement("TD");
-    let deleteButton = document.createElement("TD");
-
-
-    // Fill the cells with correct data
-    idCell.innerText = newRow.orderID;   
-    orderDateCell.innerText = newRow.orderDate;
-    customerIDCell.innerText = newRow.customerID;
-    totalAmountCell.innerText = newRow.totalAmount;
-    deleteButton.innerHTML = `<button onclick="deleteOrder(` + newRow.orderID + `)">Delete</button>`;
-
-    // Add the cells to the row
-    row.appendChild(idCell);
-    row.appendChild(orderDateCell);
-    row.appendChild(customerIDCell);
-    row.appendChild(totalAmountCell);
-    row.appendChild(deleteButton);
-
-
-    // Add the row to the table
-    currentTable.tBodies[0].appendChild(row);
+    // Add a delete button in the last cell
+    cell7.innerHTML = `<button onclick="deleteOrder(${newOrder.orderID})">Delete</button>`;
 }

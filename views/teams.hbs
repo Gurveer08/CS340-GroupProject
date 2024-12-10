@@ -25,6 +25,7 @@
         <tr>
             <th>Team ID</th>
             <th>Team Name</th>
+            <th>City</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
         <tr data-value="{{this.teamID}}">
             <td>{{this.teamID}}</td>
             <td>{{this.teamName}}</td>
+            <td>{{this.city}}</td>
             <td><button onclick="deleteTeam({{this.teamID}})">Delete</button></td>
 
         </tr>
@@ -52,7 +54,6 @@
 
     <button type="submit">Add Team</button>
 </form>
-
 <script src="./js/add_team.js"></script>
 
 <h2>Updating Team Form</h2>
@@ -60,13 +61,13 @@
 
 <form id="update-team-form-ajax">
     <label for="input-teamID">Team ID:</label>
-    <input type="number" name="input-teamID" id="input-teamID" placeholder="Enter team ID">
+    <input type="number" name="input-teamID" id="input-update-teamID" placeholder="Enter team ID">
 
     <label for="input-teamName">Team Name:</label>
-    <input type="text" name="input-teamName" id="input-teamName" placeholder="Enter team name">
+    <input type="text" name="input-teamName" id="input-update-teamName" placeholder="Enter team name">
 
     <label for="input-city">City:</label>
-    <input type="text" name="input-city" id="input-city" placeholder="Enter city">
+    <input type="text" name="input-city" id="input-update-city" placeholder="Enter city">
 
     <button type="submit">Update Team</button>
 </form>

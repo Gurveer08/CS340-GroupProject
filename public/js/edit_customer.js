@@ -11,19 +11,19 @@ updateCustomerForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let inputcustomerID = document.getElementById("input-update-customer-ID");
-    let inputfirstName = document.getElementById("input-update-firstName-ajax");
-    let inputlastName = document.getElementById("input-update-lastName-ajax");
-    let inputemail = document.getElementById("input-update-email");
-    let inputaddress = document.getElementById("input-update-address");
-    let inputphone = document.getElementById("input-update-phone")
+    let inputFirstName = document.getElementById("input-update-firstName-ajax");
+    let inputLastName = document.getElementById("input-update-lastName-ajax");
+    let inputEmail = document.getElementById("input-update-email");
+    let inputAddress = document.getElementById("input-update-address");
+    let inputPhone = document.getElementById("input-update-phone")
 
     // Get the values from the form fields
     let customerIDValue = inputcustomerID.value;
-    let firstNameValue = inputfirstName.value;
-    let lastNameValue = inputlastName.value;
-    let emailValue = inputemail.value;
-    let addressValue = inputaddress.value;
-    let phoneValue = inputphone.value;
+    let firstNameValue = inputFirstName.value;
+    let lastNameValue = inputLastName.value;
+    let emailValue = inputEmail.value;
+    let addressValue = inputAddress.value;
+    let phoneValue = inputPhone.value;
 
 
     console.log(customerIDValue);
