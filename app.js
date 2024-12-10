@@ -64,11 +64,9 @@ app.delete('/delete-order-ajax/', function(req,res,next){
         // Run query
         db.pool.query(deleteOrders, [orderID], function(error, rows, fields) {
             if (error) {
-                // If error occurs send Error 400 response
                 console.log(error);
                 res.status(400).send({ message: "Error deleting order." });
             } else {
-                // Send a 204 response if delete successful
                 res.sendStatus(204);
             }
         });
@@ -76,10 +74,10 @@ app.delete('/delete-order-ajax/', function(req,res,next){
 
 
 app.post('/add-order-ajax', function (req, res) {
-    // Save incoming data
+    
     let data = req.body;
 
-    // Define query to insert new data
+    // Query to insert new data
     let query = `INSERT INTO Orders (orderID, orderDate, customerID, totalAmount) VALUES (?, ?, ?, ?)`;
 
     // Insert new data
@@ -91,8 +89,13 @@ app.post('/add-order-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve new row for AJAX response
-        let query2 = `SELECT * FROM Orders WHERE orderID = ?`;
+        // Query to retrieve new row 
+        let query2 = `
+        SELECT Orders.*, Customers.firstName, Customers.lastName 
+        FROM Orders
+        LEFT JOIN Customers ON Orders.customerID = Customers.customerID
+        WHERE Orders.orderID = ?;
+        `;
 
         db.pool.query(query2, [results.insertId], function (error, rows, fields) {
             if (error) {
@@ -101,7 +104,7 @@ app.post('/add-order-ajax', function (req, res) {
                 return;
             }
 
-            // Send new row data as response
+            // Send new row data 
             res.send(rows);
         });
     });
@@ -109,15 +112,15 @@ app.post('/add-order-ajax', function (req, res) {
 
 // PUT Route for updating Order
 app.post('/put-order-ajax', function (req, res) {
-    // Capture the incoming data
+
     let data = req.body;
 
-    // Define query to update data
+    // Query to update data
     let query = `UPDATE Orders 
                  SET orderDate = ?, customerID = ?, totalAmount = ? 
                  WHERE orderID = ?`;
 
-    // Execute query to update data
+    // Execute query 
     db.pool.query(query, [data.orderDate, data.customerID, data.totalAmount, data.orderID], function (error, results, fields) {
         if (error) {
             console.log(error);
@@ -125,7 +128,7 @@ app.post('/put-order-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve updated row for AJAX response
+        // Query to retrieve updated row
         let query2 = `
         SELECT Orders.*, Customers.firstName, Customers.lastName 
         FROM Orders
@@ -139,7 +142,7 @@ app.post('/put-order-ajax', function (req, res) {
                 return;
             }
 
-            // Send updated row data as response
+            // Send updated row data 
             res.send(rows);
         });
     });
@@ -252,11 +255,9 @@ app.delete('/delete-team-ajax/', function(req,res,next){
         // Run query
         db.pool.query(deleteTeams, [teamID], function(error, rows, fields) {
             if (error) {
-                // If error occurs send Error 400 response
                 console.log(error);
                 res.status(400).send({ message: "Error deleting team." });
             } else {
-                // Send a 204 response if delete successful
                 res.sendStatus(204);
             }
         });
@@ -264,10 +265,10 @@ app.delete('/delete-team-ajax/', function(req,res,next){
 
 // Add teams
 app.post('/add-team-ajax', function (req, res) {
-    // Save incoming data
+
     let data = req.body;
 
-    // Define query to insert new data
+    // Query to insert new data
     let query = `INSERT INTO Teams (teamName, city) VALUES (?, ?)`;
 
     // Insert new data
@@ -279,7 +280,7 @@ app.post('/add-team-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve new row for AJAX response
+        // Query to retrieve new row 
         let query2 = `SELECT * FROM Teams WHERE teamID = ?`;
 
         db.pool.query(query2, [results.insertId], function (error, rows, fields) {
@@ -289,7 +290,7 @@ app.post('/add-team-ajax', function (req, res) {
                 return;
             }
 
-            // Send new row data as response
+            // Send new row data
             res.send(rows);
         });
     });
@@ -297,7 +298,7 @@ app.post('/add-team-ajax', function (req, res) {
 
 // PUT Route for updating Team
 app.put('/put-team-ajax', function (req, res) {
-    // Capture the incoming data
+
     let data = req.body;
 
     // Define query to update team data
@@ -359,11 +360,9 @@ app.delete('/delete-player-ajax/', function(req,res,next){
         // Run query
         db.pool.query(deletePlayers, [playerID], function(error, rows, fields) {
             if (error) {
-                // If error occurs send Error 400 response
                 console.log(error);
                 res.status(400).send({ message: "Error deleting player." });
             } else {
-                // Send a 204 response if delete successful
                 res.sendStatus(204);
             }
         });
@@ -371,13 +370,13 @@ app.delete('/delete-player-ajax/', function(req,res,next){
 
 // Add player
 app.post('/add-player-ajax', function (req, res) {
-    // Save incoming data
+
     let data = req.body;
 
-    // Define query to insert new data into the Players table
+    // Query to insert new data 
     let query = `INSERT INTO Players (playerName) VALUES (?)`;
 
-    // Insert new data into the Players table
+    // Insert new data 
     db.pool.query(query, [data.playerName], function (error, results, fields) {
 
         if (error) {
@@ -386,7 +385,7 @@ app.post('/add-player-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve the newly inserted player for the AJAX response
+        // Query to retrieve new player  
         let query2 = `SELECT * FROM Players WHERE playerID = ?`;
 
         db.pool.query(query2, [results.insertId], function (error, rows, fields) {
@@ -396,7 +395,7 @@ app.post('/add-player-ajax', function (req, res) {
                 return;
             }
 
-            // Send the new player data as the response
+            // Send new player data 
             res.send(rows);
         });
     });
@@ -404,7 +403,6 @@ app.post('/add-player-ajax', function (req, res) {
 
 // PUT Route for updating Player
 app.put('/put-player-ajax', function (req, res) {
-    // Capture the incoming data
     let data = req.body;
 
     // Define query to update player data
@@ -469,10 +467,9 @@ app.get('/teamplayers', function(req, res)
 
 // POST route for adding new TeamPlayer
 app.post('/add-team-player-ajax', function (req, res) {
-    // Save incoming data
     let data = req.body;
 
-    // Define query to insert new data
+    // Query to insert new data
     let query = `INSERT INTO TeamPlayers (teamID, playerID, startDate, endDate) VALUES (?, ?, ?, ?)`;
 
     // Insert new data
@@ -484,7 +481,7 @@ app.post('/add-team-player-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve new row for AJAX response
+        // Query to retrieve new row 
         let query2 = `SELECT TeamPlayers.teamPlayerID, Teams.teamName, Players.playerName, TeamPlayers.startDate, TeamPlayers.endDate 
                       FROM TeamPlayers 
                       INNER JOIN Teams ON TeamPlayers.teamID = Teams.teamID 
@@ -498,7 +495,7 @@ app.post('/add-team-player-ajax', function (req, res) {
                 return;
             }
 
-            // Send new row data as response
+            // Send new row data 
             res.send(rows);
         });
     });
@@ -514,11 +511,9 @@ app.delete('/delete-team-player-ajax/', function(req,res,next){
         // Run query
         db.pool.query(deleteTeamPlayers, [teamPlayerID], function(error, rows, fields) {
             if (error) {
-                // If error occurs send Error 400 response
                 console.log(error);
                 res.status(400).send({ message: "Error deleting team player." });
-            } else {
-                // Send a 204 response if delete successful
+            } else {       
                 res.sendStatus(204);
             }
         });
@@ -526,7 +521,6 @@ app.delete('/delete-team-player-ajax/', function(req,res,next){
 
 // PUT Route for updating TeamPlayer
 app.put('/put-team-player-ajax', function (req, res) {
-    // Capture the incoming data
     let data = req.body;
 
     // Define query to update data
@@ -534,7 +528,7 @@ app.put('/put-team-player-ajax', function (req, res) {
                  SET teamID = ?, playerID = ?, startDate = ?, endDate = ? 
                  WHERE teamPlayerID = ?`;
 
-    // Execute query to update data
+    // Execute query 
     db.pool.query(query, [data.teamID, data.playerID, data.startDate, data.endDate, data.teamPlayerID], function (error, results, fields) {
         if (error) {
             console.log(error);
@@ -565,10 +559,9 @@ app.put('/put-team-player-ajax', function (req, res) {
 
 // POST route for adding new Customer
 app.post('/add-customer-ajax', function (req, res) {
-    // Save incoming data
     let data = req.body;
 
-    // Define query to insert new data
+    // Query to insert new data
     let query = `INSERT INTO Customers (firstName, lastName, email, address, phone) VALUES (?, ?, ?, ?, ?)`;
 
     // Insert new data
@@ -580,7 +573,7 @@ app.post('/add-customer-ajax', function (req, res) {
             return;
         }
         
-        // Query to retrieve new row for AJAX response
+        // Query to retrieve new row 
         let query2 = `SELECT * FROM Customers WHERE customerID = ?`;
 
         db.pool.query(query2, [results.insertId], function (error, rows, fields) {
@@ -590,14 +583,13 @@ app.post('/add-customer-ajax', function (req, res) {
                 return;
             }
 
-            // Send new row data as response
             res.send(rows);
         });
     });
 });
 // PUT Route for updating customer
 app.put('/put-customer-ajax', function (req, res) {
-    // Capture the incoming data
+
     let data = req.body;
 
     // Define query to update data
@@ -605,7 +597,7 @@ app.put('/put-customer-ajax', function (req, res) {
                  SET firstName = ?, lastName = ?, email = ?, address = ?, phone = ?
                  WHERE customerID = ?`;
 
-    // Execute query to update data
+    // Execute query 
     db.pool.query(query, [data.firstName, data.lastName, data.email, data.address, data.phone, data.customerID], function (error, results, fields) {
         if (error) {
             console.log(error);
@@ -613,7 +605,7 @@ app.put('/put-customer-ajax', function (req, res) {
             return;
         }
 
-        // Query to retrieve new row for AJAX response
+        // Query to retrieve new row 
         let query2 = `SELECT * FROM Customers WHERE customerID = ?`;
 
         db.pool.query(query2, [data.customerID], function (error, rows, fields) {
@@ -623,7 +615,7 @@ app.put('/put-customer-ajax', function (req, res) {
                 return;
             }
 
-            // Send new row data as response
+            // Send new row data 
             res.send(rows);
         });
     });

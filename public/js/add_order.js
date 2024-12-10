@@ -71,8 +71,8 @@ function addRowToTable(newOrder) {
     cell2.textContent = newOrder.orderDate;
     cell3.textContent = newOrder.customerID;
     cell4.textContent = newOrder.totalAmount;
-    cell5.textContent = newOrder.teamID;
-    cell6.textContent = newOrder.playerID;
+    cell5.textContent = newOrder.firstName;
+    cell6.textContent = newOrder.lastName;
 
     // Add a delete button in the last cell
     cell7.innerHTML = `<button onclick="deleteOrder(${newOrder.orderID})">Delete</button>`;
