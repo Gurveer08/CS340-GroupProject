@@ -108,7 +108,7 @@ app.post('/add-order-ajax', function (req, res) {
 });
 
 // PUT Route for updating Order
-app.put('/put-order-ajax', function (req, res) {
+app.post('/put-order-ajax', function (req, res) {
     // Capture the incoming data
     let data = req.body;
 

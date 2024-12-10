@@ -8,41 +8,41 @@ updateOrderForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputOrderID = document.getElementById("input-update-orderID");
+    let inputOrderId = document.getElementById("input-update-orderID");
     let inputOrderDate = document.getElementById("input-update-orderDate");
-    let inputCustomerID = document.getElementById("input-update-customerID");
+    let inputCustomerId = document.getElementById("input-update-customerID");
     let inputTotalAmount = document.getElementById("input-update-totalAmount");
 
     // Get the values from the form fields
-    let orderIDValue = inputOrderID.value;
+    let orderIdValue = inputOrderId.value;
     let orderDateValue = inputOrderDate.value;
-    let customerIDValue = inputCustomerID.value || null;
+    let customerIdValue = inputCustomerId.value;
     let totalAmountValue = inputTotalAmount.value;
 
-    // Put our data we want to send in a javascript object
+    // Put our data we want to send in a JavaScript object
     let data = {
-        orderID: orderIDValue,
+        orderID: orderIdValue,
         orderDate: orderDateValue,
-        customerID: customerIDValue,
+        customerID: customerIdValue,
         totalAmount: totalAmountValue
-    }
+    };
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/put-order-ajax");  
+    xhttp.open("POST", "/put-order-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
-            // Add the updated data to the table
-            updateTableRow(xhttp.response, orderIDValue);
+            // Add the new data to the table
+            updateTableRow(xhttp.response, orderIdValue);
 
             // Clear the input fields for another transaction
-            inputOrderID.value = '';
+            inputOrderId.value = '';
             inputOrderDate.value = '';
-            inputCustomerID.value = '';
+            inputCustomerId.value = '';
             inputTotalAmount.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -52,9 +52,8 @@ updateOrderForm.addEventListener("submit", function (e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-})
+});
 
-// Function to update the order row in the table
 function updateTableRow(updatedOrder, orderID) {
     let parsedData = JSON.parse(updatedOrder)[0];
 
@@ -72,7 +71,8 @@ function updateTableRow(updatedOrder, orderID) {
             cells[1].textContent = parsedData.orderDate;
             cells[2].textContent = parsedData.customerID;
             cells[3].textContent = parsedData.totalAmount;
-
+            cells[4].textContent = parsedData.firstName;
+            cells[5].textContent = parsedData.lastName; 
 
             break; // Exit loop once row is updated
         }
